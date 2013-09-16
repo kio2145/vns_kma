@@ -20,6 +20,18 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    bool eventFilter(QObject *target, QEvent *event);
+   /* {
+        if (event->type() == QEvent::MouseButtonDblClick)
+        {
+            QMouseEvent *mouseEvent = (QMouseEvent *) event;
+            QMessageBox::warning(0,"Warning", "Warning message text");
+            //qDebug<<mouseEvent->pos().x()<<"     "<<mouseEvent->pos().y();    //в консоль выводим координаты
+            return true;    //возвращаю true, событие обработано, дальнейшая обработка не требуется
+        }
+        return false;    //Событие должно быть обработано родительским виджетом
+    }*/
+
 private:
     Ui::MainWindow *ui;
 };
