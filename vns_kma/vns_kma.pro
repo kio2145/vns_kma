@@ -13,8 +13,10 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    parsanddrow.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    parsanddrow.h
 
 FORMS    += mainwindow.ui
