@@ -119,122 +119,84 @@ void MainWindow::on_pushButton_5_clicked()
     pc.load("pc.png");
     modem.load("modem.png");
     sw.load("sw.png");
+    int i=0;
+    QString l;
+    QString le;
+    QString lei;
+    QString line;
+    QDebug qd= qDebug();
+    QTextStream t( &file );
+    qreal x;
+    qreal y;
     if ( !file.open(QIODevice::ReadOnly) )
           {
                 QMessageBox::warning(0,"Warning", "файл пошкоджено");
            }
     else
     {
-        QDebug qd= qDebug();
-        QTextStream t( &file );
-        qreal x;
-        qreal y;
-        QString h=" ";
-        QString line;
-        QString l;
-        QString le;
-        QString lei;
-        int j=0;
-        int tt=0;
-        int u=0;
-        bool viras=false;
-        bool virasx=false;
-        bool virasxx=false;
-        bool virasxy=false;
-                while ( !t.atEnd() )
+        while ( !t.atEnd() )
+        {
+            i++;
+            line = t.readLine();
+            if(i==1)
+            {
+                l=line;
+            }
+            if(i==2)
+            {
+                le=line;
+                x=(le.toInt());
+            }
+            if(i==3)
+            {
+                lei=line;
+                y=(lei.toInt());
+            }
+            if(i==4)
+            {
+                i=0;
+                if(l=="sw")
                 {
-                  line ="";
-                  line = t.readLine();
-                  for(int i=0;line[i]!='\0';i++)
-                  {
-                      if((line[i]!='*') && (viras!=true) && (line[i]!='#') )
-                      {
-                          l[j]=line[i];
-                          j++;
-                      }
-                      if((line[i]!='*') && (virasx!=true) && (viras==true) && (line[i]!='#'))
-                      {
-                          le[tt]=line[i];
-                          tt++;
-                          x=(le.toInt());
-
-                      }
-                      if((line[i]!='*') && (virasxx!=true) && (virasx==true) &&(line[i]!='#') )
-                      {
-                          lei[u]=line[i];
-                          u++;
-                          y=100;
-                          //y=(lei.toInt());
-                      }
-                      if((line[i]=='*')&& (viras!=true) && (line[i]!='#'))
-                          viras=true;
-                      if((line[i]=='*') && (virasx!=true) && (line[i]!='#'))
-                          virasx=true;
-                      if((line[i]=='*') && (virasx==true) && (line[i]!='#'))
-                      {
-                          virasxx=true;
-                      }
-                      if(line[i]=='#')
-                      {
-                          if(l=="sw")
-                          {
-                              QGraphicsPixmapItem * b=scene->addPixmap(sw);
-                              b->moveBy(x,y);
-                              ui->graphicsView->setScene(scene);
-                              ui->graphicsView->show();
-                              qd<<y<<'\n';
-                              qd<<"firs";
-                              line="";
-                              le="";
-                              lei="";
-                              l="";
-                              j=0;
-                              tt=0;
-                              u=0;
-                              viras=false;
-                              virasx=false;
-                          }
-                          if(l=="pc")
-                          {
-                              QGraphicsPixmapItem * c=scene->addPixmap(pc);
-                              c->moveBy(x,y);
-                              ui->graphicsView->setScene(scene);
-                              ui->graphicsView->show();
-                              qd<<le<<'\n';
-                              qd<<"second";
-                              line="";
-                              le="";
-                              lei="";
-                              l="";
-                              j=0;
-                              tt=0;
-                              u=0;
-                              viras=false;
-                              virasx=false;
-                          }
-                          if(l=="modem")
-                          {
-                              QGraphicsPixmapItem * m=scene->addPixmap(modem);
-                              m->moveBy(x,y);
-                              ui->graphicsView->setScene(scene);
-                              ui->graphicsView->show();
-                              qd<<le<<'\n';
-                              line="";
-                              le="";
-                              lei="";
-                              l="";
-                              j=0;
-                              tt=0;
-                              u=0;
-                              viras=false;
-                              virasx=false;
-                          }
-                      }
-
-                  }
-
+                    QGraphicsPixmapItem * b=scene->addPixmap(sw);
+                    b->moveBy(x,y);
+                    ui->graphicsView->setScene(scene);
+                    ui->graphicsView->show();
+                    qd<<x<<'\n';
+                    qd<<"firs";
+                    line="";
+                    le="";
+                    lei="";
+                    l="";
                 }
-                file.close();
+                if(l=="pc")
+                {
+                    QGraphicsPixmapItem * c=scene->addPixmap(pc);
+                    c->moveBy(x,y);
+                    ui->graphicsView->setScene(scene);
+                    ui->graphicsView->show();
+                    qd<<le<<'\n';
+                    qd<<"second";
+                    line="";
+                    le="";
+                    lei="";
+                    l="";
+                }
+              if(l=="modem")
+              {
+                  QGraphicsPixmapItem * m=scene->addPixmap(modem);
+                  m->moveBy(x,y);
+                  ui->graphicsView->setScene(scene);
+                  ui->graphicsView->show();
+                  qd<<le<<'\n';
+                  line="";
+                  le="";
+                  lei="";
+                  l="";
+               }
+            }
+
+        }
+                //file.close();
     }
     ui->graphicsView->setScene(scene);
     ui->graphicsView->show();
