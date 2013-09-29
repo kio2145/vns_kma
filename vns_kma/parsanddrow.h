@@ -1,7 +1,6 @@
 #ifndef PARSANDDROW_H
 #define PARSANDDROW_H
 #include "mainwindow.h"
-#include "mainwindow.h"
 #include <QFile>
 #include "QString"
 #include <string>

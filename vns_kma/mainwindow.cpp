@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "parsanddrow.h"
+#include "pc.h"
+#include "switch.h"
 #include <QGraphicsPixmapItem>
 #include <QFile>
 #include<QMouseEvent>

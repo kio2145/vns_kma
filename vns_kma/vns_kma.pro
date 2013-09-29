@@ -17,6 +17,8 @@ SOURCES += main.cpp\
     parsanddrow.cpp
 
 HEADERS  += mainwindow.h \
-    parsanddrow.h
+    parsanddrow.h \
+    switch.h \
+    pc.h
 
 FORMS    += mainwindow.ui
