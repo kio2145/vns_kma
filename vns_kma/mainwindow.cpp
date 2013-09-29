@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "parsanddrow.h"
 #include <QGraphicsPixmapItem>
 #include <QFile>
 #include<QMouseEvent>
@@ -109,98 +110,52 @@ void MainWindow::on_pushButton_4_clicked()
 void MainWindow::on_pushButton_5_clicked()
 {
     QGraphicsScene *scene = new QGraphicsScene(ui->graphicsView);
-    scene->setSceneRect(0,0,621,431);
+    scene->setSceneRect(0,0,621,431);//розмір сцені
     ui->graphicsView->setAlignment(Qt::AlignLeft|Qt::AlignTop );
     qApp->applicationDirPath() +"/sw.png";
-    QFile file("exmp.txt");
     QPixmap pc;
     QPixmap modem;
     QPixmap sw;
     pc.load("pc.png");
     modem.load("modem.png");
     sw.load("sw.png");
-    int i=0;
-    QString l;
-    QString le;
-    QString lei;
-    QString line;
+    QString l; //назва приладу
     QDebug qd= qDebug();
-    QTextStream t( &file );
-    qreal x;
-    qreal y;
-    if ( !file.open(QIODevice::ReadOnly) )
-          {
-                QMessageBox::warning(0,"Warning", "файл пошкоджено");
-           }
-    else
+    parsanddrow d;
+    int dd; //кілкість приладів
+    dd=(d.count("exmp.txt")/4);//кілкість рядків на 4 властивості отримаємо кілкість приладів
+    d.cord("exmp.txt",dd);//заповнення масивік кординатами та іменами (and mac)
+    qd<<dd;
+    for(int h=0; h<dd; h++) //малювання
     {
-        while ( !t.atEnd() )
-        {
-            i++;
-            line = t.readLine();
-            if(i==1)
-            {
-                l=line;
-            }
-            if(i==2)
-            {
-                le=line;
-                x=(le.toInt());
-            }
-            if(i==3)
-            {
-                lei=line;
-                y=(lei.toInt());
-            }
-            if(i==4)
-            {
-                i=0;
+        l=d.getdev(h);
                 if(l=="sw")
                 {
-                    QGraphicsPixmapItem * b=scene->addPixmap(sw);
-                    b->moveBy(x,y);
-                    ui->graphicsView->setScene(scene);
-                    ui->graphicsView->show();
-                    qd<<x<<'\n';
-                    qd<<"firs";
-                    line="";
-                    le="";
-                    lei="";
-                    l="";
+                    QGraphicsPixmapItem * a=scene->addPixmap(sw);
+                    a->moveBy(d.getx(h),d.gety(h));
                 }
                 if(l=="pc")
                 {
-                    QGraphicsPixmapItem * c=scene->addPixmap(pc);
-                    c->moveBy(x,y);
-                    ui->graphicsView->setScene(scene);
-                    ui->graphicsView->show();
-                    qd<<le<<'\n';
-                    qd<<"second";
-                    line="";
-                    le="";
-                    lei="";
-                    l="";
+                    QGraphicsPixmapItem * b=scene->addPixmap(pc);
+                    b->moveBy(d.getx(h),d.gety(h));
                 }
-              if(l=="modem")
-              {
-                  QGraphicsPixmapItem * m=scene->addPixmap(modem);
-                  m->moveBy(x,y);
-                  ui->graphicsView->setScene(scene);
-                  ui->graphicsView->show();
-                  qd<<le<<'\n';
-                  line="";
-                  le="";
-                  lei="";
-                  l="";
-               }
-            }
+                if(l=="modem")
+                {
+                  QGraphicsPixmapItem * bc=scene->addPixmap(modem);
+                  bc->moveBy(d.getx(h),d.gety(h));
+                }
+                if((l!="modem")|(l!="sw")|(l!="pc"))
+                {
+                   qd<<l;
+                }
 
-        }
-                //file.close();
-    }
+     }
+
+    qd<<l;
     ui->graphicsView->setScene(scene);
     ui->graphicsView->show();
-    ui->graphicsView->setScene(scene);
     ui->graphicsView->scene()->installEventFilter(this);
 
 }
+
+
