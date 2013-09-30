@@ -1,21 +1,19 @@
-#ifndef SWITCH_H
-#define SWITCH_H
+#ifndef ROUTER_H
+#define ROUTER_H
 #include "QString"
 #include <string>
 #include "QTextStream"
-#include <QMessageBox>
 #include <QFile>
-class switches
+#include <QMessageBox>
+class router
 {
-public:
     QString name;
     QString mac;
     QString ip;
     QString arrayofconnect;
     QString other;
-    int connects;
-    int friconnects;
-    switches();
+public:
+    router();
     void addnew(QString n,QString m,QString i,QString o)
     {
         name=n;
@@ -33,7 +31,7 @@ public:
               }
         else
         {
-            t<<"sw";
+            t<<"modem";
             t<< "\n";
             t<<x;
             t<<"\n";
@@ -45,4 +43,5 @@ public:
         }
     }
 };
-#endif // SWITCH_H
+
+#endif // ROUTER_H

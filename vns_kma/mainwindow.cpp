@@ -5,6 +5,7 @@
 #include "switch.h"
 #include <QGraphicsPixmapItem>
 #include <QFile>
+#include "router.h"
 #include<QMouseEvent>
 #include <QPointF>
 #include <QTextStream>
@@ -41,23 +42,56 @@ MainWindow::~MainWindow()
 
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_pushButton_clicked() //роутер тут!
 {
-    QFile file("exem.txt");
+    router a;
+    a.addconfig("exmp.txt",300,300,"mac888");
     QGraphicsScene *scene = new QGraphicsScene(ui->graphicsView);
+    scene->setSceneRect(0,0,621,431);//розмір сцені
     ui->graphicsView->setAlignment(Qt::AlignLeft|Qt::AlignTop );
-    QPen pen(Qt::green);//Просто выбираем цвет для карандашика
-    qApp->applicationDirPath() +"/modem.png";
-    QPixmap lol;
-    lol.load("modem.png");
-    QGraphicsPixmapItem * p = scene->addPixmap(lol);
-    //scene->addText("Hello, world!");
-    p->moveBy(0,0);
+    qApp->applicationDirPath() +"/sw.png";
+    QPixmap pcc;
+    QPixmap modem;
+    QPixmap sw;
+    pcc.load("pc.png");
+    modem.load("modem.png");
+    sw.load("sw.png");
+    QString l; //назва приладу
+    QDebug qd= qDebug();
+    parsanddrow d;
+    int dd; //кілкість приладів
+    dd=(d.count("exmp.txt")/4);//кілкість рядків на 4 властивості отримаємо кілкість приладів
+    d.cord("exmp.txt",dd);//заповнення масивік кординатами та іменами (and mac)
+    qd<<dd;
+    for(int h=0; h<dd; h++) //малювання
+    {
+        l=d.getdev(h);
+                if(l=="sw")
+                {
+                    QGraphicsPixmapItem * a=scene->addPixmap(sw);
+                    a->moveBy(d.getx(h),d.gety(h));
+                }
+                if(l=="pc")
+                {
+                    QGraphicsPixmapItem * b=scene->addPixmap(pcc);
+                    b->moveBy(d.getx(h),d.gety(h));
+                }
+                if(l=="modem")
+                {
+                  QGraphicsPixmapItem * bc=scene->addPixmap(modem);
+                  bc->moveBy(d.getx(h),d.gety(h));
+                }
+                if((l!="modem")|(l!="sw")|(l!="pc"))
+                {
+                   qd<<l;
+                }
+
+     }
+
+    qd<<l;
     ui->graphicsView->setScene(scene);
     ui->graphicsView->show();
-    ui->graphicsView->setScene(scene);
     ui->graphicsView->scene()->installEventFilter(this);
-
 }
 
 void MainWindow::on_pushButton_2_clicked()
@@ -78,47 +112,18 @@ bool MainWindow::eventFilter(QObject *target, QEvent *event)
 }
 
 
-void MainWindow::on_pushButton_3_clicked()
+void MainWindow::on_pushButton_3_clicked() //тут свитчи
 {
-    QGraphicsScene *scene = new QGraphicsScene(ui->graphicsView);
-    scene->setSceneRect(0,0,621,431);
-    ui->graphicsView->setAlignment(Qt::AlignLeft|Qt::AlignTop );
-    qApp->applicationDirPath() +"/sw.png";
-    QPixmap lol;
-    lol.load("sw.png");
-    QGraphicsPixmapItem * p = scene->addPixmap(lol);
-    p->moveBy(112,255);
-    ui->graphicsView->setScene(scene);
-    ui->graphicsView->show();
-    ui->graphicsView->setScene(scene);
-    ui->graphicsView->scene()->installEventFilter(this);
-}
-
-void MainWindow::on_pushButton_4_clicked()
-{
-    QGraphicsScene *scene = new QGraphicsScene(ui->graphicsView);
-    ui->graphicsView->setAlignment(Qt::AlignLeft|Qt::AlignTop );
-    qApp->applicationDirPath() +"/pc.giv";
-    QPixmap lol;
-    lol.load("pc.png");
-    QGraphicsPixmapItem * p = scene->addPixmap(lol);
-    p->moveBy(100,0);
-    ui->graphicsView->setScene(scene);
-    ui->graphicsView->show();
-    ui->graphicsView->setScene(scene);
-    ui->graphicsView->scene()->installEventFilter(this);
-}
-
-void MainWindow::on_pushButton_5_clicked()
-{
+    switches a;
+    a.addconfig("exmp.txt",250,250,"mac777");
     QGraphicsScene *scene = new QGraphicsScene(ui->graphicsView);
     scene->setSceneRect(0,0,621,431);//розмір сцені
     ui->graphicsView->setAlignment(Qt::AlignLeft|Qt::AlignTop );
     qApp->applicationDirPath() +"/sw.png";
-    QPixmap pc;
+    QPixmap pcc;
     QPixmap modem;
     QPixmap sw;
-    pc.load("pc.png");
+    pcc.load("pc.png");
     modem.load("modem.png");
     sw.load("sw.png");
     QString l; //назва приладу
@@ -138,7 +143,109 @@ void MainWindow::on_pushButton_5_clicked()
                 }
                 if(l=="pc")
                 {
-                    QGraphicsPixmapItem * b=scene->addPixmap(pc);
+                    QGraphicsPixmapItem * b=scene->addPixmap(pcc);
+                    b->moveBy(d.getx(h),d.gety(h));
+                }
+                if(l=="modem")
+                {
+                  QGraphicsPixmapItem * bc=scene->addPixmap(modem);
+                  bc->moveBy(d.getx(h),d.gety(h));
+                }
+                if((l!="modem")|(l!="sw")|(l!="pc"))
+                {
+                   qd<<l;
+                }
+
+     }
+
+    qd<<l;
+    ui->graphicsView->setScene(scene);
+    ui->graphicsView->show();
+    ui->graphicsView->scene()->installEventFilter(this);
+}
+
+void MainWindow::on_pushButton_4_clicked() //тут пк
+{
+    pc a;
+    a.addconfig("exmp.txt",0,0,"mac666");
+    QGraphicsScene *scene = new QGraphicsScene(ui->graphicsView);
+    scene->setSceneRect(0,0,621,431);//розмір сцені
+    ui->graphicsView->setAlignment(Qt::AlignLeft|Qt::AlignTop );
+    qApp->applicationDirPath() +"/sw.png";
+    QPixmap pcc;
+    QPixmap modem;
+    QPixmap sw;
+    pcc.load("pc.png");
+    modem.load("modem.png");
+    sw.load("sw.png");
+    QString l; //назва приладу
+    QDebug qd= qDebug();
+    parsanddrow d;
+    int dd; //кілкість приладів
+    dd=(d.count("exmp.txt")/4);//кілкість рядків на 4 властивості отримаємо кілкість приладів
+    d.cord("exmp.txt",dd);//заповнення масивік кординатами та іменами (and mac)
+    qd<<dd;
+    for(int h=0; h<dd; h++) //малювання
+    {
+        l=d.getdev(h);
+                if(l=="sw")
+                {
+                    QGraphicsPixmapItem * a=scene->addPixmap(sw);
+                    a->moveBy(d.getx(h),d.gety(h));
+                }
+                if(l=="pc")
+                {
+                    QGraphicsPixmapItem * b=scene->addPixmap(pcc);
+                    b->moveBy(d.getx(h),d.gety(h));
+                }
+                if(l=="modem")
+                {
+                  QGraphicsPixmapItem * bc=scene->addPixmap(modem);
+                  bc->moveBy(d.getx(h),d.gety(h));
+                }
+                if((l!="modem")|(l!="sw")|(l!="pc"))
+                {
+                   qd<<l;
+                }
+
+     }
+
+    qd<<l;
+    ui->graphicsView->setScene(scene);
+    ui->graphicsView->show();
+    ui->graphicsView->scene()->installEventFilter(this);
+}
+
+void MainWindow::on_pushButton_5_clicked()
+{
+    QGraphicsScene *scene = new QGraphicsScene(ui->graphicsView);
+    scene->setSceneRect(0,0,621,431);//розмір сцені
+    ui->graphicsView->setAlignment(Qt::AlignLeft|Qt::AlignTop );
+    qApp->applicationDirPath() +"/sw.png";
+    QPixmap pcc;
+    QPixmap modem;
+    QPixmap sw;
+    pcc.load("pc.png");
+    modem.load("modem.png");
+    sw.load("sw.png");
+    QString l; //назва приладу
+    QDebug qd= qDebug();
+    parsanddrow d;
+    int dd; //кілкість приладів
+    dd=(d.count("exmp.txt")/4);//кілкість рядків на 4 властивості отримаємо кілкість приладів
+    d.cord("exmp.txt",dd);//заповнення масивік кординатами та іменами (and mac)
+    qd<<dd;
+    for(int h=0; h<dd; h++) //малювання
+    {
+        l=d.getdev(h);
+                if(l=="sw")
+                {
+                    QGraphicsPixmapItem * a=scene->addPixmap(sw);
+                    a->moveBy(d.getx(h),d.gety(h));
+                }
+                if(l=="pc")
+                {
+                    QGraphicsPixmapItem * b=scene->addPixmap(pcc);
                     b->moveBy(d.getx(h),d.gety(h));
                 }
                 if(l=="modem")

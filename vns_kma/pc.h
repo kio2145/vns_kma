@@ -4,14 +4,16 @@
 #include <string>
 #include "QTextStream"
 #include <QFile>
+#include <QMessageBox>
 class pc
 {
-public:
+
 QString name;
 QString mac;
 QString ip;
 QString arrayofconnect;
 QString other;
+public:
     pc();
     void add(QString n,QString m,QString i,QString o)
     {
@@ -20,17 +22,26 @@ QString other;
         ip=i;
         other=o;
     }
-    void addconfig(QString f)
+    void addconfig(QString f,int x,int y,QString mac)
     {
         QFile file(f);
         QTextStream t( &file );
-        if ( !file.open(QIODevice::ReadOnly) )
+        if ( !file.open(QIODevice::Append | QIODevice::Text) )
               {
                  QMessageBox::warning(0,"Warning", "файл пошкоджено");
               }
         else
         {
-                 //запись в конец файла допилить
+            t<<"pc";
+            t<< "\n";
+            t<<x;
+            t<<"\n";
+            t<<y;
+            t<<"\n";
+            t<<mac;
+            t<<"\n";
+            file.close();
+            //запись в конец файла допилить
         }
     }
 };

@@ -14,11 +14,15 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    parsanddrow.cpp
+    parsanddrow.cpp \
+    pc.cpp \
+    switch.cpp \
+    router.cpp
 
 HEADERS  += mainwindow.h \
     parsanddrow.h \
     switch.h \
-    pc.h
+    pc.h \
+    router.h
 
 FORMS    += mainwindow.ui
