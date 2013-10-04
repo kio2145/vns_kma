@@ -92,6 +92,7 @@ void MainWindow::on_pushButton_clicked() //роутер тут!
     ui->graphicsView->setScene(scene);
     ui->graphicsView->show();
     ui->graphicsView->scene()->installEventFilter(this);
+    d.deletemas();
 }
 
 void MainWindow::on_pushButton_2_clicked()
@@ -99,7 +100,7 @@ void MainWindow::on_pushButton_2_clicked()
     exit(0);
 }
 
-bool MainWindow::eventFilter(QObject *target, QEvent *event)
+bool MainWindow::eventFilter(QObject *target, QEvent *event)// --------
 {
     if (event->type() == QEvent::MouseButtonPress)
     {
@@ -162,6 +163,7 @@ void MainWindow::on_pushButton_3_clicked() //тут свитчи
     ui->graphicsView->setScene(scene);
     ui->graphicsView->show();
     ui->graphicsView->scene()->installEventFilter(this);
+    d.deletemas();
 }
 
 void MainWindow::on_pushButton_4_clicked() //тут пк
@@ -184,7 +186,7 @@ void MainWindow::on_pushButton_4_clicked() //тут пк
     int dd; //кілкість приладів
     dd=(d.count("exmp.txt")/4);//кілкість рядків на 4 властивості отримаємо кілкість приладів
     d.cord("exmp.txt",dd);//заповнення масивік кординатами та іменами (and mac)
-    qd<<dd;
+
     for(int h=0; h<dd; h++) //малювання
     {
         l=d.getdev(h);
@@ -214,6 +216,7 @@ void MainWindow::on_pushButton_4_clicked() //тут пк
     ui->graphicsView->setScene(scene);
     ui->graphicsView->show();
     ui->graphicsView->scene()->installEventFilter(this);
+    d.deletemas();
 }
 
 void MainWindow::on_pushButton_5_clicked()
@@ -234,7 +237,6 @@ void MainWindow::on_pushButton_5_clicked()
     int dd; //кілкість приладів
     dd=(d.count("exmp.txt")/4);//кілкість рядків на 4 властивості отримаємо кілкість приладів
     d.cord("exmp.txt",dd);//заповнення масивік кординатами та іменами (and mac)
-    qd<<dd;
     for(int h=0; h<dd; h++) //малювання
     {
         l=d.getdev(h);
@@ -264,6 +266,7 @@ void MainWindow::on_pushButton_5_clicked()
     ui->graphicsView->setScene(scene);
     ui->graphicsView->show();
     ui->graphicsView->scene()->installEventFilter(this);
+    d.deletemas();
 
 }
 

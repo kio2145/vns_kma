@@ -40,8 +40,8 @@ class parsanddrow
 
     int* x;
     int* y;
-    QString dev[10];
-    QString mac[10];
+    QString* dev;//[10];
+    QString* mac;//[10];
     void cord(QString f,int dc)
     {
         QFile file(f);
@@ -49,8 +49,8 @@ class parsanddrow
         QTextStream t( &file );
         x=new int[dowj];
         y=new int[dowj];
-        //dev=new QString[10];
-        //mac=new QString[10];
+        dev=new QString[dowj];
+        mac=new QString[dowj];
         QString line;
         int i=0;
         int j=0;
@@ -103,6 +103,13 @@ class parsanddrow
     QString getmac(int i)
     {
         return mac[i];
+    }
+    void deletemas()
+    {
+        delete x;
+        delete y;
+        delete dev;
+
     }
 
 };
