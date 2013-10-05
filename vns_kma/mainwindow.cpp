@@ -103,9 +103,8 @@ void MainWindow::on_pushButton_2_clicked()
 
 bool MainWindow::eventFilter(QObject *target, QEvent *event)// --------
 {
-    int w=0;
+    int w;
     int pos;
-    int ccount=0;
     parsanddrow d;
     int dd=(d.count("exmp.txt"))/4;
     d.cord("exmp.txt",dd);
@@ -115,19 +114,34 @@ bool MainWindow::eventFilter(QObject *target, QEvent *event)// --------
     scene->setSceneRect(0,0,621,431);//розмір сцені
     ui->graphicsView->setAlignment(Qt::AlignLeft|Qt::AlignTop );
     QDebug qd= qDebug();
+     if(event->type() == QEvent::MouseButtonPress)
+     {
+         if(d.movstart("graphic.txt")==0)
+         {
+             d.movs("graphic.txt");
+         }
+         else
+         {
+             d.movstop("graphic.txt");
+         }
+     }
      if(event->type() == QEvent::MouseMove)
     {
+
          qd<<event;
+         qd<<d.movstart("graphic.txt");
          QMouseEvent *mouseEvent =(QMouseEvent*) event;
          {
+             if(d.movstart("graphic.txt")==1)
+               {
              x=mouseEvent->pos().x();
              y=mouseEvent->pos().y();
+
              qd<<x<<"   "<<y<<" draw"<<"\n";
              for(int i=0;i<dd;i++)
              {
                  if(d.getx(i)>x-25 && d.getx(i)<x+25 && d.gety(i)>y-25 &&d.gety(i)<y+25 )
                   {
-                     d.movsuport();
                      pos=i;
                      qd<<x<<"   "<<y<<" cath"<<"\n";
                      int dd=(d.count("exmp.txt"))/4;
@@ -145,29 +159,30 @@ bool MainWindow::eventFilter(QObject *target, QEvent *event)// --------
                       {
                          l=d.getdev(h);
                          if(l=="sw")
-                                                {
-                                                    QGraphicsPixmapItem * a=scene->addPixmap(sw);
-                                                    a->moveBy(d.getx(h),d.gety(h));
-                                                }
-                                                if(l=="pc")
-                                                {
-                                                    QGraphicsPixmapItem * b=scene->addPixmap(pcc);
-                                                    b->moveBy(d.getx(h),d.gety(h));
-                                                }
-                                                if(l=="modem")
-                                                {
-                                                  QGraphicsPixmapItem * bc=scene->addPixmap(modem);
-                                                  bc->moveBy(d.getx(h),d.gety(h));
-                                                }
-                                     }
-                                    ui->graphicsView->setScene(scene);
-                                    ui->graphicsView->show();
+                          {
+                             QGraphicsPixmapItem * a=scene->addPixmap(sw);
+                             a->moveBy(d.getx(h),d.gety(h));
+                         }
+                         if(l=="pc")
+                         {
+                             QGraphicsPixmapItem * b=scene->addPixmap(pcc);
+                             b->moveBy(d.getx(h),d.gety(h));
+                         }
+                         if(l=="modem")
+                         {
+                             QGraphicsPixmapItem * bc=scene->addPixmap(modem);
+                             bc->moveBy(d.getx(h),d.gety(h));
+                         }
+                     }
+                     //w=3;
+                     ui->graphicsView->setScene(scene);
+                     ui->graphicsView->show();
                    }
              }
              x=mouseEvent->pos().x();
              y=mouseEvent->pos().y();
              qd<<x<<"   "<<y<<" cath"<<"\n";
-
+           }
          }
          return true;
     }
@@ -213,14 +228,8 @@ void MainWindow::on_pushButton_3_clicked() //тут свитчи
                   QGraphicsPixmapItem * bc=scene->addPixmap(modem);
                   bc->moveBy(d.getx(h),d.gety(h));
                 }
-                if((l!="modem")|(l!="sw")|(l!="pc"))
-                {
-                   qd<<l;
-                }
 
      }
-
-    qd<<l;
     ui->graphicsView->setScene(scene);
     ui->graphicsView->show();
     ui->graphicsView->scene()->installEventFilter(this);
@@ -322,13 +331,13 @@ void MainWindow::on_pushButton_5_clicked()
                 }
 
      }
-
-    qd<<l;
     ui->graphicsView->setScene(scene);
     ui->graphicsView->show();
     ui->graphicsView->scene()->installEventFilter(this);
     d.deletemas();
 
 }
+
+
 
 

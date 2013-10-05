@@ -15,7 +15,6 @@ class parsanddrow
     QString* mac;
     public:
     int counts;
-    int w=0;
     parsanddrow();
     int count(QString f)
     {
@@ -41,9 +40,55 @@ class parsanddrow
     {
         counts=co;
     }
-    void movsuport()
+    int movstart(QString f)
     {
-        w=1;
+       QFile file(f);
+       QString line;
+       int u;
+       QTextStream t( &file );
+       if ( !file.open(QIODevice::ReadOnly) )
+       {
+             QMessageBox::warning(0,"Warning", "файл пошкоджено");
+       }
+             while ( !t.atEnd())
+             {
+                 line = t.readLine();
+             }
+         file.close();
+         u=(line.toInt());
+        return u;
+    }
+    void movs(QString f)
+    {
+        QFile file(f);
+        QTextStream t( &file );
+        if ( !file.open(QIODevice::WriteOnly | QIODevice::Text) )
+              {
+              QMessageBox::warning(0,"Warning", "файл пошкоджено");
+              }
+        else
+        {
+            t<<"1";
+            t<<"\n";
+        }
+        file.close();
+
+    }
+    void movstop(QString f)
+    {
+        QFile file(f);
+        QTextStream t( &file );
+        if ( !file.open(QIODevice::WriteOnly | QIODevice::Text) )
+              {
+              QMessageBox::warning(0,"Warning", "файл пошкоджено");
+              }
+        else
+        {
+            t<<"0";
+            t<<"\n";
+        }
+        file.close();
+
     }
 
     void cord(QString f,int dc)
@@ -115,16 +160,11 @@ class parsanddrow
         delete y;
         delete dev;
     }
-    int getw()
-    {
-        return w;
-    }
     void rewritedata(QString str,int dc,int pos ,qreal newx,qreal newy)
     {
 
         QFile file(str);
         QTextStream t( &file );
-        w=0;
         if ( !file.open(QIODevice::WriteOnly | QIODevice::Text) )
               {
               QMessageBox::warning(0,"Warning", "файл пошкоджено");
