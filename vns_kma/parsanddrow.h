@@ -9,9 +9,13 @@
 #include <QMainWindow>
 class parsanddrow
 {
-    QFile filer;
+    int* x;
+    int* y;
+    QString* dev;
+    QString* mac;
     public:
     int counts;
+    int w=0;
     parsanddrow();
     int count(QString f)
     {
@@ -37,11 +41,11 @@ class parsanddrow
     {
         counts=co;
     }
+    void movsuport()
+    {
+        w=1;
+    }
 
-    int* x;
-    int* y;
-    QString* dev;//[10];
-    QString* mac;//[10];
     void cord(QString f,int dc)
     {
         QFile file(f);
@@ -84,6 +88,7 @@ class parsanddrow
                 j++;
                 i=0;
             }
+
         }
           }
         file.close();
@@ -109,9 +114,51 @@ class parsanddrow
         delete x;
         delete y;
         delete dev;
-
     }
+    int getw()
+    {
+        return w;
+    }
+    void rewritedata(QString str,int dc,int pos ,qreal newx,qreal newy)
+    {
 
+        QFile file(str);
+        QTextStream t( &file );
+        w=0;
+        if ( !file.open(QIODevice::WriteOnly | QIODevice::Text) )
+              {
+              QMessageBox::warning(0,"Warning", "файл пошкоджено");
+              }
+        else
+        {
+            for(int i=0;i<dc;i++)
+            {
+                if(i!=pos)
+                {
+            t<<dev[i];
+            t<< "\n";
+            t<<x[i];
+            t<<"\n";
+            t<<y[i];
+            t<<"\n";
+            t<<mac[i];
+            t<<"\n";
+                }
+                else
+                {
+                    t<<dev[i];
+                    t<< "\n";
+                    t<<newx;
+                    t<<"\n";
+                    t<<newy;
+                    t<<"\n";
+                    t<<mac[i];
+                    t<<"\n";
+                }
+            }
+
+            file.close();
+        }
+    }
 };
-
 #endif // PARSANDDROW_H

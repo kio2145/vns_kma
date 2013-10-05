@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->pushButton->setIconSize(QSize(60,60));
     //ui->pushButton->setAutoFillBackground(true);
     ui->graphicsView->viewport()->installEventFilter(this);
+    ui->graphicsView->viewport()->setMouseTracking(1);
     ui->pushButton_3->setIcon(ButtonIconn);
     ui->pushButton_3->setIconSize(QSize(60,60));
     ui->pushButton_4->setIcon(ButtonIconnn);
@@ -102,17 +103,77 @@ void MainWindow::on_pushButton_2_clicked()
 
 bool MainWindow::eventFilter(QObject *target, QEvent *event)// --------
 {
-    if (event->type() == QEvent::MouseButtonPress)
+    int w=0;
+    int pos;
+    int ccount=0;
+    parsanddrow d;
+    int dd=(d.count("exmp.txt"))/4;
+    d.cord("exmp.txt",dd);
+    qreal x;
+    qreal y;
+    QGraphicsScene *scene = new QGraphicsScene(ui->graphicsView);
+    scene->setSceneRect(0,0,621,431);//розмір сцені
+    ui->graphicsView->setAlignment(Qt::AlignLeft|Qt::AlignTop );
+    QDebug qd= qDebug();
+     if(event->type() == QEvent::MouseMove)
     {
-        QMouseEvent *mouseEvent = (QMouseEvent *) event;
-        QMessageBox::warning(0,"Warning", "Warning message text");
-        //qDebug<<mouseEvent->pos().x()<<"     "<<mouseEvent->pos().y();    //в консоль выводим координаты
-        return true;    //возвращаю true, событие обработано, дальнейшая обработка не требуется
+         qd<<event;
+         QMouseEvent *mouseEvent =(QMouseEvent*) event;
+         {
+             x=mouseEvent->pos().x();
+             y=mouseEvent->pos().y();
+             qd<<x<<"   "<<y<<" draw"<<"\n";
+             for(int i=0;i<dd;i++)
+             {
+                 if(d.getx(i)>x-25 && d.getx(i)<x+25 && d.gety(i)>y-25 &&d.gety(i)<y+25 )
+                  {
+                     d.movsuport();
+                     pos=i;
+                     qd<<x<<"   "<<y<<" cath"<<"\n";
+                     int dd=(d.count("exmp.txt"))/4;
+                     d.rewritedata("exmp.txt",dd,pos,x,y);
+                     qd<<x<<"   "<<y<<"done";
+                     qApp->applicationDirPath() +"/sw.png";
+                     QPixmap pcc;
+                     QPixmap modem;
+                     QPixmap sw;
+                     pcc.load("pc.png");
+                     modem.load("modem.png");
+                     sw.load("sw.png");
+                     QString l; //назва приладу
+                     for(int h=0; h<dd; h++) //малювання
+                      {
+                         l=d.getdev(h);
+                         if(l=="sw")
+                                                {
+                                                    QGraphicsPixmapItem * a=scene->addPixmap(sw);
+                                                    a->moveBy(d.getx(h),d.gety(h));
+                                                }
+                                                if(l=="pc")
+                                                {
+                                                    QGraphicsPixmapItem * b=scene->addPixmap(pcc);
+                                                    b->moveBy(d.getx(h),d.gety(h));
+                                                }
+                                                if(l=="modem")
+                                                {
+                                                  QGraphicsPixmapItem * bc=scene->addPixmap(modem);
+                                                  bc->moveBy(d.getx(h),d.gety(h));
+                                                }
+                                     }
+                                    ui->graphicsView->setScene(scene);
+                                    ui->graphicsView->show();
+                   }
+             }
+             x=mouseEvent->pos().x();
+             y=mouseEvent->pos().y();
+             qd<<x<<"   "<<y<<" cath"<<"\n";
+
+         }
+         return true;
     }
-    return false;    //Событие должно быть обработано родительским виджетом
-}
-
-
+       return false;
+    }
+      //Событие должно быть обработано родительским виджетом
 void MainWindow::on_pushButton_3_clicked() //тут свитчи
 {
     switches a;
@@ -121,6 +182,7 @@ void MainWindow::on_pushButton_3_clicked() //тут свитчи
     scene->setSceneRect(0,0,621,431);//розмір сцені
     ui->graphicsView->setAlignment(Qt::AlignLeft|Qt::AlignTop );
     qApp->applicationDirPath() +"/sw.png";
+    parsanddrow d;
     QPixmap pcc;
     QPixmap modem;
     QPixmap sw;
@@ -129,7 +191,6 @@ void MainWindow::on_pushButton_3_clicked() //тут свитчи
     sw.load("sw.png");
     QString l; //назва приладу
     QDebug qd= qDebug();
-    parsanddrow d;
     int dd; //кілкість приладів
     dd=(d.count("exmp.txt")/4);//кілкість рядків на 4 властивості отримаємо кілкість приладів
     d.cord("exmp.txt",dd);//заповнення масивік кординатами та іменами (and mac)
