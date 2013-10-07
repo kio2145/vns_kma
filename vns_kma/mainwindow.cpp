@@ -19,21 +19,25 @@ MainWindow::MainWindow(QWidget *parent) :
     QPixmap pixmap;
     QPixmap pixmapp;
     QPixmap pixmappp;
+    QPixmap pixmapppp;
+    pixmapppp.load("del.png");
     pixmap.load("sw.png");
     pixmappp.load("pc.png");
     pixmapp.load("modem.png");
     QIcon ButtonIconn(pixmap);
     QIcon ButtonIcon(pixmapp);
-     QIcon ButtonIconnn(pixmappp);
+    QIcon ButtonIconnn(pixmappp);
+    QIcon ButtonIconnnn(pixmapppp);
     ui->pushButton->setIcon(ButtonIcon);
     ui->pushButton->setIconSize(QSize(60,60));
-    //ui->pushButton->setAutoFillBackground(true);
     ui->graphicsView->viewport()->installEventFilter(this);
     ui->graphicsView->viewport()->setMouseTracking(1);
     ui->pushButton_3->setIcon(ButtonIconn);
     ui->pushButton_3->setIconSize(QSize(60,60));
     ui->pushButton_4->setIcon(ButtonIconnn);
     ui->pushButton_4->setIconSize(QSize(60,60));
+    ui->pushButton_6->setIcon(ButtonIconnnn);
+    ui->pushButton_6->setIconSize(QSize(48,48));
 
 }
 
@@ -98,6 +102,8 @@ void MainWindow::on_pushButton_clicked() //роутер тут!
 
 void MainWindow::on_pushButton_2_clicked()
 {
+    parsanddrow d;
+    d.stop("graphic.txt");
     exit(0);
 }
 
@@ -128,7 +134,7 @@ bool MainWindow::eventFilter(QObject *target, QEvent *event)// --------
              {
                  x=mouseEvent->pos().x();
                  y=mouseEvent->pos().y();
-                 if(d.getx(i)>x-25 && d.getx(i)<x+25 && d.gety(i)>y-25 &&d.gety(i)<y+25 )
+                 if(d.getx(i)>x-30 && d.getx(i)<x+30 && d.gety(i)>y-30 &&d.gety(i)<y+30 )
                  {
                      d.delate("exmp.txt",dd,i);
                      drawinwindow();
@@ -158,7 +164,7 @@ bool MainWindow::eventFilter(QObject *target, QEvent *event)// --------
              qd<<x<<"   "<<y<<" draw"<<"\n";
              for(int i=0;i<dd;i++)
              {
-                 if(d.getx(i)>x-25 && d.getx(i)<x+25 && d.gety(i)>y-25 &&d.gety(i)<y+25 )
+                 if(d.getx(i)>x-30 && d.getx(i)<x+30 && d.gety(i)>y-30 &&d.gety(i)<y+30 )
                   {
                      qd<<x<<"   "<<y<<" cath"<<"\n";
                      int dd=(d.count("exmp.txt"))/4;
