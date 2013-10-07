@@ -259,3 +259,18 @@ void MainWindow::drawinwindow()
     ui->graphicsView->scene()->installEventFilter(this);
     d.deletemas();
 }
+
+void MainWindow::on_actionExit_triggered()
+{
+    parsanddrow d;
+    d.stop("graphic.txt");
+    exit(0);
+}
+
+void MainWindow::on_action_triggered()
+{
+    parsanddrow d;
+    int dd=(d.count("exmp.txt"))/4;
+    d.cord("exmp.txt",dd);
+    drawinwindow();
+}
