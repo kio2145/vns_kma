@@ -215,7 +215,7 @@ void MainWindow::on_pushButton_6_clicked()
 void MainWindow::drawinwindow()
 {
     QGraphicsScene *scene = new QGraphicsScene(ui->graphicsView);
-    scene->setSceneRect(0,0,621,431);//розмір сцені
+    scene->setSceneRect(0,0,725,575);//розмір сцені
     ui->graphicsView->setAlignment(Qt::AlignLeft|Qt::AlignTop );
     qApp->applicationDirPath() +"/sw.png";
     QPixmap pcc;

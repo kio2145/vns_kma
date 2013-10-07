@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>964</width>
-    <height>601</height>
+    <width>1067</width>
+    <height>654</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,42 +22,16 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>631</width>
-      <height>451</height>
+      <width>731</width>
+      <height>581</height>
      </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_2">
-    <property name="geometry">
-     <rect>
-      <x>870</x>
-      <y>500</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>exit</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_5">
-    <property name="geometry">
-     <rect>
-      <x>790</x>
-      <y>10</y>
-      <width>91</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Сеть</string>
     </property>
    </widget>
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>650</x>
-      <y>90</y>
+      <x>750</x>
+      <y>110</y>
       <width>311</width>
       <height>111</height>
      </rect>
@@ -131,8 +105,8 @@
    <widget class="QGroupBox" name="groupBox_2">
     <property name="geometry">
      <rect>
-      <x>650</x>
-      <y>210</y>
+      <x>750</x>
+      <y>220</y>
       <width>311</width>
       <height>111</height>
      </rect>
@@ -206,7 +180,7 @@
    <widget class="QGroupBox" name="groupBox_3">
     <property name="geometry">
      <rect>
-      <x>650</x>
+      <x>750</x>
       <y>330</y>
       <width>311</width>
       <height>111</height>
@@ -278,17 +252,92 @@
      </property>
     </widget>
    </widget>
-   <widget class="QPushButton" name="pushButton_6">
+   <widget class="QGroupBox" name="groupBox_4">
     <property name="geometry">
      <rect>
-      <x>660</x>
-      <y>450</y>
-      <width>91</width>
-      <height>71</height>
+      <x>750</x>
+      <y>0</y>
+      <width>311</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Network</string>
+    </property>
+    <widget class="QPushButton" name="pushButton_5">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>91</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Network</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBox">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>50</y>
+       <width>131</width>
+       <height>22</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_7">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>30</y>
+       <width>111</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>type of connect</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_5">
+    <property name="geometry">
+     <rect>
+      <x>750</x>
+      <y>440</y>
+      <width>311</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Delete</string>
+    </property>
+    <widget class="QPushButton" name="pushButton_6">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>91</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="geometry">
+     <rect>
+      <x>980</x>
+      <y>570</y>
+      <width>75</width>
+      <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string/>
+     <string>exit</string>
     </property>
    </widget>
   </widget>
@@ -297,7 +346,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>964</width>
+     <width>1067</width>
      <height>21</height>
     </rect>
    </property>
@@ -306,6 +355,7 @@
      <string>Меню</string>
     </property>
     <addaction name="action"/>
+    <addaction name="actionExit"/>
    </widget>
    <addaction name="menuU"/>
   </widget>
@@ -330,6 +380,11 @@
    </property>
    <property name="menuRole">
     <enum>QAction::ApplicationSpecificRole</enum>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
    </property>
   </action>
  </widget>
