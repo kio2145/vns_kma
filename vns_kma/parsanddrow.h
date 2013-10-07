@@ -14,7 +14,6 @@ class parsanddrow
     QString* dev;
     QString* mac;
     public:
-    int counts;
     parsanddrow();
     int count(QString f)
     {
@@ -36,10 +35,6 @@ class parsanddrow
 
        return coun;
     }
-    void setcount(int co)
-    {
-        counts=co;
-    }
     int movstart(QString f)
     {
        QFile file(f);
@@ -59,7 +54,7 @@ class parsanddrow
         return u;
     }
     void movs(QString f)
-    {
+    {  //переміщення старт
         QFile file(f);
         QTextStream t( &file );
         if ( !file.open(QIODevice::WriteOnly | QIODevice::Text) )
@@ -73,9 +68,10 @@ class parsanddrow
         }
         file.close();
 
+
     }
-    void movstop(QString f)
-    {
+    void stop(QString f)
+    {  // зупинка видалення або переміщення
         QFile file(f);
         QTextStream t( &file );
         if ( !file.open(QIODevice::WriteOnly | QIODevice::Text) )
@@ -110,7 +106,7 @@ class parsanddrow
         else
         {
         while ( !t.atEnd() && j<dc)
-        {
+        { // считування файлу для подальшої роботи
 
             line = t.readLine();
             i++;
@@ -160,10 +156,10 @@ class parsanddrow
         delete y;
         delete dev;
     }
-    void rewritedata(QString str,int dc,int pos ,qreal newx,qreal newy)
+    void rewritedata(QString f,int dc,int pos ,qreal newx,qreal newy)
     {
-
-        QFile file(str);
+    // процедура перезапису данних після перемішення
+        QFile file(f);
         QTextStream t( &file );
         if ( !file.open(QIODevice::WriteOnly | QIODevice::Text) )
               {
@@ -194,6 +190,49 @@ class parsanddrow
                     t<<"\n";
                     t<<mac[i];
                     t<<"\n";
+                }
+            }
+
+            file.close();
+        }
+    }
+    void startdel(QString f)//початок видалення
+    {
+        QFile file(f);
+        QTextStream t( &file );
+        if ( !file.open(QIODevice::WriteOnly | QIODevice::Text) )
+              {
+              QMessageBox::warning(0,"Warning", "файл пошкоджено");
+              }
+        else
+        {
+            t<<"3";
+            t<<"\n";
+        }
+        file.close();
+    }
+    void delate(QString f,int dc,int pos ) //видалення обладнання основна процедура
+    {
+        QFile file(f);
+        QTextStream t( &file );
+        if ( !file.open(QIODevice::WriteOnly | QIODevice::Text) )
+              {
+              QMessageBox::warning(0,"Warning", "файл пошкоджено");
+              }
+        else
+        {
+            for(int i=0;i<dc;i++)
+            {
+                if(i!=pos)
+                {
+            t<<dev[i];
+            t<< "\n";
+            t<<x[i];
+            t<<"\n";
+            t<<y[i];
+            t<<"\n";
+            t<<mac[i];
+            t<<"\n";
                 }
             }
 
