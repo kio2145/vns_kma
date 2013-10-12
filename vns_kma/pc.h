@@ -22,7 +22,7 @@ public:
         ip=i;
         other=o;
     }
-    void addconfig(QString f,int x,int y,QString mac)
+    void addconfig(QString f,int x,int y,QString mac,QString name)
     {
         QFile file(f);
         QTextStream t( &file );
@@ -39,6 +39,8 @@ public:
             t<<y;
             t<<"\n";
             t<<mac;
+            t<<"\n";
+            t<<name;
             t<<"\n";
             file.close();
             //запись в конец файла допилить

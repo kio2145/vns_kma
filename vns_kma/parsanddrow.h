@@ -257,5 +257,17 @@ class parsanddrow
             file.close();
         }
     }
+    int coutofdev(QString typeofdev, int dd)
+    {
+        int devcount=0;
+        for(int i=0;i<dd;i++)
+        {
+            if (dev[i]==typeofdev)
+            {
+                devcount++;
+            }
+        }
+        return devcount;
+    }
 };
 #endif // PARSANDDROW_H

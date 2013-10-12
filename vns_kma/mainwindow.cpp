@@ -12,6 +12,7 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QFileDialog>
+#include <QLineEdit>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -51,54 +52,31 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_clicked() //роутер тут!
 {
     router a;
-    a.addconfig(openfil(),300,300,"mac888");
-    QGraphicsScene *scene = new QGraphicsScene(ui->graphicsView);
-    scene->setSceneRect(0,0,621,431);//розмір сцені
-    ui->graphicsView->setAlignment(Qt::AlignLeft|Qt::AlignTop );
-    qApp->applicationDirPath() +"/sw.png";
-    QPixmap pcc;
-    QPixmap modem;
-    QPixmap sw;
-    pcc.load("pc.png");
-    modem.load("modem.png");
-    sw.load("sw.png");
-    QString l; //назва приладу
-    QDebug qd= qDebug();
     parsanddrow d;
-    int dd; //кілкість приладів
+    QString mac;
+    QString name;
+    QString newname;
+    int dd;
+    name=ui->lineEdit_5->text();
+    mac=ui->lineEdit_6->text();
+    a.addconfig(openfil(),300,300,mac,name);
+    drawinwindow();
+    int namber;
     dd=(d.count(openfil())/5);//кілкість рядків на 4 властивості отримаємо кілкість приладів
-    d.cord(openfil(),dd);//заповнення масивік кординатами та іменами (and mac)
-    qd<<dd;
-    for(int h=0; h<dd; h++) //малювання
+    d.cord(openfil(),dd);//
+    namber=d.coutofdev("modem",dd);
+    newname="Router"+QString::number(namber);
+    for(int j=0;j<dd;j++)
     {
-        l=d.getdev(h);
-                if(l=="sw")
-                {
-                    QGraphicsPixmapItem * a=scene->addPixmap(sw);
-                    a->moveBy(d.getx(h),d.gety(h));
-                }
-                if(l=="pc")
-                {
-                    QGraphicsPixmapItem * b=scene->addPixmap(pcc);
-                    b->moveBy(d.getx(h),d.gety(h));
-                }
-                if(l=="modem")
-                {
-                  QGraphicsPixmapItem * bc=scene->addPixmap(modem);
-                  bc->moveBy(d.getx(h),d.gety(h));
-                }
-                if((l!="modem")|(l!="sw")|(l!="pc"))
-                {
-                   qd<<l;
-                }
-
-     }
-
-    qd<<l;
-    ui->graphicsView->setScene(scene);
-    ui->graphicsView->show();
-    ui->graphicsView->scene()->installEventFilter(this);
-    d.deletemas();
+        newname="Router" +QString::number(namber);
+        if(d.getname(j)==newname)
+        {
+            namber++;
+            j--;
+        }
+    }
+    ui->lineEdit_5->setText(newname);
+    drawinwindow();
 }
 
 void MainWindow::on_pushButton_2_clicked()
@@ -188,14 +166,58 @@ bool MainWindow::eventFilter(QObject *target, QEvent *event)// --------
 void MainWindow::on_pushButton_3_clicked() //тут свитчи
 {
     switches a;
-    a.addconfig(openfil(),250,250,"mac777");
-   drawinwindow();
+    parsanddrow d;
+    QString mac;
+    QString name;
+    QString newname;
+    int dd;
+    mac=ui->lineEdit_4->text();
+    name=ui->lineEdit_3->text();
+    a.addconfig(openfil(),250,250,mac,name);
+    int namber;
+    dd=(d.count(openfil())/5);//кілкість рядків на 4 властивості отримаємо кілкість приладів
+    d.cord(openfil(),dd);//
+    namber=d.coutofdev("Switch",dd);
+    newname="Switch"+QString::number(namber);
+    for(int j=0;j<dd;j++)
+    {
+        newname="Switch" +QString::number(namber);
+        if(d.getname(j)==newname)
+        {
+            namber++;
+            j--;
+        }
+    }
+    ui->lineEdit_3->setText(newname);
+    drawinwindow();
 }
 
 void MainWindow::on_pushButton_4_clicked() //тут пк
 {
     pc a;
-    a.addconfig(openfil(),0,0,"mac666");
+    parsanddrow d;
+    QString mac;
+    QString name;
+    QString newname;
+    int dd=0;
+    name=ui->lineEdit->text();
+    mac=ui->lineEdit_2->text();
+    a.addconfig(openfil(),0,0,mac,name);
+    int namber;
+    dd=(d.count(openfil())/5);//кілкість рядків на 4 властивості отримаємо кілкість приладів
+    d.cord(openfil(),dd);//
+    namber=d.coutofdev("pc",dd);
+    newname="pc"+QString::number(namber);
+    for(int j=0;j<dd;j++)
+    {
+        newname="PC" +QString::number(namber);
+        if(d.getname(j)==newname)
+        {
+            namber++;
+            j--;
+        }
+    }
+    ui->lineEdit->setText(newname);
     drawinwindow();
 }
 
