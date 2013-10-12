@@ -13,6 +13,7 @@ class parsanddrow
     int* y;
     QString* dev;
     QString* mac;
+    QString* name;
     public:
     parsanddrow();
     int count(QString f)
@@ -96,6 +97,7 @@ class parsanddrow
         y=new int[dowj];
         dev=new QString[dowj];
         mac=new QString[dowj];
+        name=new QString[dowj];
         QString line;
         int i=0;
         int j=0;
@@ -126,6 +128,10 @@ class parsanddrow
             if(i==4)
             {
                 mac[j]=line;
+            }
+            if(i==5)
+            {
+                name[j]=line;
                 j++;
                 i=0;
             }
@@ -150,11 +156,17 @@ class parsanddrow
     {
         return mac[i];
     }
+    QString getname(int i)
+    {
+        return name[i];
+    }
+
     void deletemas()
     {
         delete x;
         delete y;
         delete dev;
+        delete name;
     }
     void rewritedata(QString f,int dc,int pos ,qreal newx,qreal newy)
     {
@@ -179,6 +191,8 @@ class parsanddrow
             t<<"\n";
             t<<mac[i];
             t<<"\n";
+            t<<name[i];
+            t<<"\n";
                 }
                 else
                 {
@@ -189,6 +203,8 @@ class parsanddrow
                     t<<newy;
                     t<<"\n";
                     t<<mac[i];
+                    t<<"\n";
+                    t<<name[i];
                     t<<"\n";
                 }
             }
@@ -232,6 +248,8 @@ class parsanddrow
             t<<y[i];
             t<<"\n";
             t<<mac[i];
+            t<<"\n";
+            t<<name[i];
             t<<"\n";
                 }
             }

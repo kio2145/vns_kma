@@ -11,6 +11,7 @@
 #include <QTextStream>
 #include <QMessageBox>
 #include <QDebug>
+#include <QFileDialog>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -50,7 +51,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_clicked() //роутер тут!
 {
     router a;
-    a.addconfig("exmp.txt",300,300,"mac888");
+    a.addconfig(openfil(),300,300,"mac888");
     QGraphicsScene *scene = new QGraphicsScene(ui->graphicsView);
     scene->setSceneRect(0,0,621,431);//розмір сцені
     ui->graphicsView->setAlignment(Qt::AlignLeft|Qt::AlignTop );
@@ -65,8 +66,8 @@ void MainWindow::on_pushButton_clicked() //роутер тут!
     QDebug qd= qDebug();
     parsanddrow d;
     int dd; //кілкість приладів
-    dd=(d.count("exmp.txt")/4);//кілкість рядків на 4 властивості отримаємо кілкість приладів
-    d.cord("exmp.txt",dd);//заповнення масивік кординатами та іменами (and mac)
+    dd=(d.count(openfil())/5);//кілкість рядків на 4 властивості отримаємо кілкість приладів
+    d.cord(openfil(),dd);//заповнення масивік кординатами та іменами (and mac)
     qd<<dd;
     for(int h=0; h<dd; h++) //малювання
     {
@@ -111,8 +112,11 @@ bool MainWindow::eventFilter(QObject *target, QEvent *event)// --------
 {
     int var;
     parsanddrow d;
-    int dd=(d.count("exmp.txt"))/4;
-    d.cord("exmp.txt",dd);
+    int dd;
+    if(d.count(openfil())!=0)
+    {
+    dd=(d.count(openfil()))/5;
+    d.cord(openfil(),dd);
     qreal x;
     qreal y;
     QGraphicsScene *scene = new QGraphicsScene(ui->graphicsView);
@@ -136,7 +140,7 @@ bool MainWindow::eventFilter(QObject *target, QEvent *event)// --------
                  y=mouseEvent->pos().y();
                  if(d.getx(i)>x-30 && d.getx(i)<x+30 && d.gety(i)>y-30 &&d.gety(i)<y+30 )
                  {
-                     d.delate("exmp.txt",dd,i);
+                     d.delate(openfil(),dd,i);
                      drawinwindow();
                  }
              }
@@ -167,8 +171,8 @@ bool MainWindow::eventFilter(QObject *target, QEvent *event)// --------
                  if(d.getx(i)>x-30 && d.getx(i)<x+30 && d.gety(i)>y-30 &&d.gety(i)<y+30 )
                   {
                      qd<<x<<"   "<<y<<" cath"<<"\n";
-                     int dd=(d.count("exmp.txt"))/4;
-                     d.rewritedata("exmp.txt",dd,i,x,y);
+                     int dd=(d.count(openfil()))/5;
+                     d.rewritedata(openfil(),dd,i,x,y);
                      drawinwindow();
                  }
              }
@@ -179,18 +183,19 @@ bool MainWindow::eventFilter(QObject *target, QEvent *event)// --------
        d.deletemas();
        return false;
     }
+    }
       //Событие должно быть обработано родительским виджетом
 void MainWindow::on_pushButton_3_clicked() //тут свитчи
 {
     switches a;
-    a.addconfig("exmp.txt",250,250,"mac777");
+    a.addconfig(openfil(),250,250,"mac777");
    drawinwindow();
 }
 
 void MainWindow::on_pushButton_4_clicked() //тут пк
 {
     pc a;
-    a.addconfig("exmp.txt",0,0,"mac666");
+    a.addconfig(openfil(),0,0,"mac666");
     drawinwindow();
 }
 
@@ -201,8 +206,8 @@ void MainWindow::on_pushButton_5_clicked()
 void MainWindow::on_pushButton_6_clicked()
 {
     parsanddrow d;
-    int dd=(d.count("exmp.txt"))/4;
-    d.cord("exmp.txt",dd);
+    int dd=(d.count(openfil()))/5;
+    d.cord(openfil(),dd);
     if(d.movstart("graphic.txt")==3)
     {
         d.stop("graphic.txt");
@@ -217,10 +222,14 @@ void MainWindow::drawinwindow()
     QGraphicsScene *scene = new QGraphicsScene(ui->graphicsView);
     scene->setSceneRect(0,0,725,575);//розмір сцені
     ui->graphicsView->setAlignment(Qt::AlignLeft|Qt::AlignTop );
-    qApp->applicationDirPath() +"/sw.png";
+    qApp->applicationDirPath() +"C:/Users/Igro/build-vns_kma-Desktop_Qt_5_1_1_MinGW_32bit-Debug/24.jpeg";
     QPixmap pcc;
     QPixmap modem;
     QPixmap sw;
+    QPainterPath path;
+    QFont font;
+    font.setPixelSize(50);
+    //pcc.load("C:/Users/Igro/build-vns_kma-Desktop_Qt_5_1_1_MinGW_32bit-Debug/pc.png");
     pcc.load("pc.png");
     modem.load("modem.png");
     sw.load("sw.png");
@@ -228,8 +237,10 @@ void MainWindow::drawinwindow()
     QDebug qd= qDebug();
     parsanddrow d;
     int dd; //кілкість приладів
-    dd=(d.count("exmp.txt")/4);//кілкість рядків на 4 властивості отримаємо кілкість приладів
-    d.cord("exmp.txt",dd);//заповнення масивік кординатами та іменами (and mac)
+    if(d.count(openfil())!=0)
+    {
+    dd=(d.count(openfil())/5);//кілкість рядків на 4 властивості отримаємо кілкість приладів
+    d.cord(openfil(),dd);//заповнення масивік кординатами та іменами (and mac)
     for(int h=0; h<dd; h++) //малювання
     {
         l=d.getdev(h);
@@ -237,16 +248,37 @@ void MainWindow::drawinwindow()
                 {
                     QGraphicsPixmapItem * a=scene->addPixmap(sw);
                     a->moveBy(d.getx(h),d.gety(h));
+                    QFont font;
+                    QPainterPath path;
+                    font.setPixelSize(20);
+                    font.setBold(false);
+                    font.setFamily("Calibri");
+                    path.addText(d.getx(h)-2,d.gety(h)+63,font,d.getname(h));
+                    scene->addPath(path, QPen(QBrush(Qt::black), 1), QBrush(Qt::black));
                 }
                 if(l=="pc")
                 {
                     QGraphicsPixmapItem * b=scene->addPixmap(pcc);
                     b->moveBy(d.getx(h),d.gety(h));
+                    QFont font;
+                    QPainterPath path;
+                    font.setPixelSize(20);
+                    font.setBold(false);
+                    font.setFamily("Calibri");
+                    path.addText(d.getx(h)-2,d.gety(h)+63,font,d.getname(h));
+                    scene->addPath(path, QPen(QBrush(Qt::black), 1), QBrush(Qt::black));
                 }
                 if(l=="modem")
                 {
                   QGraphicsPixmapItem * bc=scene->addPixmap(modem);
                   bc->moveBy(d.getx(h),d.gety(h));
+                  QFont font;
+                  QPainterPath path;
+                  font.setPixelSize(20);
+                  font.setBold(false);
+                  font.setFamily("Calibri");
+                  path.addText(d.getx(h)-2,d.gety(h)+63,font,d.getname(h));
+                  scene->addPath(path, QPen(QBrush(Qt::black), 1), QBrush(Qt::black));
                 }
                 if((l!="modem")|(l!="sw")|(l!="pc"))
                 {
@@ -258,6 +290,7 @@ void MainWindow::drawinwindow()
     ui->graphicsView->show();
     ui->graphicsView->scene()->installEventFilter(this);
     d.deletemas();
+    }
 }
 
 void MainWindow::on_actionExit_triggered()
@@ -269,8 +302,65 @@ void MainWindow::on_actionExit_triggered()
 
 void MainWindow::on_action_triggered()
 {
-    parsanddrow d;
-    int dd=(d.count("exmp.txt"))/4;
-    d.cord("exmp.txt",dd);
+    QString filew=QFileDialog::getOpenFileName();
+    if(filew.size()<=0)
+    {
+        QMessageBox::warning(0,"Warning", "УВАГА ВИ ПРАЦЮЕТЕ З ФАЙЛОМ "+openfil());
+    }
+    else
+    {
+    QFile file("worckfile");
+    QTextStream stream(&file);
+    if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QMessageBox::warning(0,"Warning", " ---");
+    }
+    else
+    {
+        stream<<filew.replace("\\\"","/"""); //шаманизм с эскейп последовательностью с форума он пашет
+    }
+    file.close();
+    }
     drawinwindow();
+}
+QString MainWindow::openfil()
+{
+    QString mainfails;
+    QFile file("worckfile");
+    QTextStream t( &file );
+    if ( !file.open(QIODevice::ReadOnly) )
+          {
+             QMessageBox::warning(0,"Warning", "робочій файл пошкоджено");
+          }
+    else
+    {
+    while ( !t.atEnd() )
+    {
+        mainfails=t.readLine();
+
+    }
+    }
+    file.close();
+    return mainfails;
+}
+
+void MainWindow::on_actionNew_triggered()
+{
+    QString filew=QFileDialog::getSaveFileName();
+    QFile file("worckfile");
+    QFile filen(filew.replace("\\\"","/"""));
+    QTextStream streamm(&filen);
+    filen.open(QIODevice::WriteOnly | QIODevice::Text);
+    filen.close();
+    QTextStream stream(&file);
+    if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QMessageBox::warning(0,"Warning", " ---");
+    }
+    else
+    {
+        stream<<filew.replace("\\\"","/"""); //шаманизм с эскейп последовательностью с форума он пашет
+    }
+    file.close();
+
 }

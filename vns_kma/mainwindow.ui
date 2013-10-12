@@ -354,6 +354,7 @@
     <property name="title">
      <string>Меню</string>
     </property>
+    <addaction name="actionNew"/>
     <addaction name="action"/>
     <addaction name="actionExit"/>
    </widget>
@@ -376,7 +377,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Открить файл</string>
+    <string>Open</string>
    </property>
    <property name="menuRole">
     <enum>QAction::ApplicationSpecificRole</enum>
@@ -385,6 +386,11 @@
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionNew">
+   <property name="text">
+    <string>New</string>
    </property>
   </action>
  </widget>

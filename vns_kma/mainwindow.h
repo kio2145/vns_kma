@@ -29,11 +29,16 @@ private slots:
     void on_pushButton_5_clicked();
 
     void on_pushButton_6_clicked();
+
     void drawinwindow();
 
     void on_actionExit_triggered();
 
     void on_action_triggered();
+
+    QString openfil();
+
+    void on_actionNew_triggered();
 
 private:
     Ui::MainWindow *ui;
