@@ -13,6 +13,8 @@
 #include <QDebug>
 #include <QFileDialog>
 #include <QLineEdit>
+#include <stdlib.h>
+#include <time.h>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -56,6 +58,9 @@ void MainWindow::on_pushButton_clicked() //роутер тут!
     QString mac;
     QString name;
     QString newname;
+    QString newmac;
+    int m;
+    srand(time(NULL));
     int dd;
     name=ui->lineEdit_5->text();
     mac=ui->lineEdit_6->text();
@@ -75,7 +80,27 @@ void MainWindow::on_pushButton_clicked() //роутер тут!
             j--;
         }
     }
+    for(int j=0;j<8;j++)
+    {
+        m = rand()%100;
+        newmac=newmac+QString::number( m, 16 );
+
+    }
+    for(int j=0;j<dd;j++)
+    {
+        if(d.getname(j)==newmac)
+        {
+             j=0;
+             for(int j=0;j<8;j++)
+             {
+                 m = rand()%100;
+                 newmac=newmac+QString::number( m, 16 );
+
+             }
+        }
+    }
     ui->lineEdit_5->setText(newname);
+    ui->lineEdit_6->setText(newmac);
     drawinwindow();
 }
 
@@ -170,6 +195,9 @@ void MainWindow::on_pushButton_3_clicked() //тут свитчи
     QString mac;
     QString name;
     QString newname;
+    QString newmac;
+    int m;
+    srand(time(NULL));
     int dd;
     mac=ui->lineEdit_4->text();
     name=ui->lineEdit_3->text();
@@ -188,6 +216,26 @@ void MainWindow::on_pushButton_3_clicked() //тут свитчи
             j--;
         }
     }
+    for(int j=0;j<8;j++)
+    {
+        m = rand()%100;
+        newmac=newmac+QString::number( m, 16 );
+
+    }
+    for(int j=0;j<dd;j++)
+    {
+        if(d.getname(j)==newmac)
+        {
+             j=0;
+             for(int j=0;j<8;j++)
+             {
+                 m = rand()%100;
+                 newmac=newmac+QString::number( m, 16 );
+
+             }
+        }
+    }
+    ui->lineEdit_4->setText(newmac);
     ui->lineEdit_3->setText(newname);
     drawinwindow();
 }
@@ -199,6 +247,9 @@ void MainWindow::on_pushButton_4_clicked() //тут пк
     QString mac;
     QString name;
     QString newname;
+    QString newmac;
+    int m;
+    srand(time(NULL));
     int dd=0;
     name=ui->lineEdit->text();
     mac=ui->lineEdit_2->text();
@@ -217,6 +268,26 @@ void MainWindow::on_pushButton_4_clicked() //тут пк
             j--;
         }
     }
+    for(int j=0;j<8;j++)
+    {
+        m = rand()%100;
+        newmac=newmac+QString::number( m, 16 );
+
+    }
+    for(int j=0;j<dd;j++)
+    {
+        if(d.getname(j)==newmac)
+        {
+             j=0;
+             for(int j=0;j<8;j++)
+             {
+                 m = rand()%100;
+                 newmac=newmac+QString::number( m, 16 );
+
+             }
+        }
+    }
+    ui->lineEdit_2->setText(newmac);
     ui->lineEdit->setText(newname);
     drawinwindow();
 }

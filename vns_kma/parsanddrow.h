@@ -269,5 +269,27 @@ class parsanddrow
         }
         return devcount;
     }
+    char *IntToHex(unsigned Value,unsigned Digits)//сраный перевод в 16ричную систему спизжено
+   {
+     char *Hex;
+     Hex[Digits]='\0';
+     int r;
+     while (Value>=16 && Digits!=0)
+         {
+          r=Value%16;
+          if (r>=10) Hex[--Digits]= r+55;
+          else Hex[--Digits]= r+48;
+          Value/=16;
+         }
+
+     if (Digits >0)
+     {
+        if (Value>=10) Hex[--Digits]= Value+55;
+        else Hex[--Digits]= Value+48;
+
+        for (int i = Digits-1; i >= 0; i--)  Hex[i]=48;
+     }
+     return Hex;
+   }
 };
 #endif // PARSANDDROW_H
