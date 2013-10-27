@@ -36,6 +36,8 @@ private slots:
 
     void on_action_triggered();
 
+    void drawnewconnect(int xxend, int yyend);
+
     QString openfil();
 
     void on_actionNew_triggered();

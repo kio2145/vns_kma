@@ -17,12 +17,14 @@ SOURCES += main.cpp\
     parsanddrow.cpp \
     pc.cpp \
     switch.cpp \
-    router.cpp
+    router.cpp \
+    connects.cpp
 
 HEADERS  += mainwindow.h \
     parsanddrow.h \
     switch.h \
     pc.h \
-    router.h
+    router.h \
+    connects.h
 
 FORMS    += mainwindow.ui

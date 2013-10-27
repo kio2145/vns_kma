@@ -14,6 +14,9 @@ class parsanddrow
     QString* dev;
     QString* mac;
     QString* name;
+    QString* fromconnectmac1;
+    QString* fromconnectmac2;
+
     public:
     parsanddrow();
     int count(QString f)
@@ -35,6 +38,36 @@ class parsanddrow
        }
 
        return coun;
+    }
+    void startconnect(QString f) //перед выбором елементів зеднання
+    {
+        QFile file(f);
+        QTextStream t( &file );
+        if ( !file.open(QIODevice::WriteOnly | QIODevice::Text) )
+              {
+              QMessageBox::warning(0,"Warning", "файл пошкоджено");
+              }
+        else
+        {
+            t<<"4";
+            t<<"\n";
+        }
+        file.close();
+    }
+    void connecting(QString f)//процес зьеднання малювання звязку
+    {
+        QFile file(f);
+        QTextStream t( &file );
+        if ( !file.open(QIODevice::WriteOnly | QIODevice::Text) )
+              {
+              QMessageBox::warning(0,"Warning", "файл пошкоджено");
+              }
+        else
+        {
+            t<<"5";
+            t<<"\n";
+        }
+        file.close();
     }
     int movstart(QString f)
     {
@@ -98,6 +131,8 @@ class parsanddrow
         dev=new QString[dowj];
         mac=new QString[dowj];
         name=new QString[dowj];
+        fromconnectmac1=new QString[dowj];
+        fromconnectmac2=new QString[dowj];
         QString line;
         int i=0;
         int j=0;
@@ -118,11 +153,21 @@ class parsanddrow
             }
             if(i==2)
             {
+                if(dev[j]!="con")
+                {
                 x[j]=(line.toInt());
+                }
+                else
+                fromconnectmac1[j]=line;
             }
             if(i==3)
             {
+                if(dev[j]!="con")
+                {
                 y[j]=(line.toInt());
+                }
+                else
+                fromconnectmac2[j]=line;
             }
 
             if(i==4)
@@ -160,6 +205,14 @@ class parsanddrow
     {
         return name[i];
     }
+    QString gatmacconnect1(int i)
+    {
+        return fromconnectmac1[i];
+    }
+    QString gatmacconnect2(int i)
+    {
+        return fromconnectmac2[i];
+    }
 
     void deletemas()
     {
@@ -181,14 +234,24 @@ class parsanddrow
         {
             for(int i=0;i<dc;i++)
             {
-                if(i!=pos)
+                if(i!=pos || dev[i]=="con")
                 {
             t<<dev[i];
             t<< "\n";
+            if(dev[i]!="con")
+            {
             t<<x[i];
             t<<"\n";
             t<<y[i];
             t<<"\n";
+            }
+            else
+            {
+                t<<fromconnectmac1[i];
+                t<<"\n";
+                t<<fromconnectmac2[i];
+                t<<"\n";
+            }
             t<<mac[i];
             t<<"\n";
             t<<name[i];
@@ -196,17 +259,20 @@ class parsanddrow
                 }
                 else
                 {
-                    t<<dev[i];
-                    t<< "\n";
-                    t<<newx;
-                    t<<"\n";
-                    t<<newy;
-                    t<<"\n";
-                    t<<mac[i];
-                    t<<"\n";
-                    t<<name[i];
-                    t<<"\n";
-                }
+                    if(dev[i]!="con")
+                    {
+                     t<<dev[i];
+                     t<< "\n";
+                     t<<newx;
+                     t<<"\n";
+                     t<<newy;
+                     t<<"\n";
+                     t<<mac[i];
+                     t<<"\n";
+                     t<<name[i];
+                     t<<"\n";
+                    }
+                    }
             }
 
             file.close();
@@ -243,9 +309,18 @@ class parsanddrow
                 {
             t<<dev[i];
             t<< "\n";
-            t<<x[i];
-            t<<"\n";
-            t<<y[i];
+            if(dev[i]!="con")
+            {
+                t<<x[i];
+                t<<"\n";
+                t<<y[i];
+            }
+            else
+            {
+                t<<fromconnectmac1[i];
+                t<<"\n";
+                t<<fromconnectmac2[i];
+            }
             t<<"\n";
             t<<mac[i];
             t<<"\n";
@@ -269,27 +344,5 @@ class parsanddrow
         }
         return devcount;
     }
-    char *IntToHex(unsigned Value,unsigned Digits)//сраный перевод в 16ричную систему спизжено
-   {
-     char *Hex;
-     Hex[Digits]='\0';
-     int r;
-     while (Value>=16 && Digits!=0)
-         {
-          r=Value%16;
-          if (r>=10) Hex[--Digits]= r+55;
-          else Hex[--Digits]= r+48;
-          Value/=16;
-         }
-
-     if (Digits >0)
-     {
-        if (Value>=10) Hex[--Digits]= Value+55;
-        else Hex[--Digits]= Value+48;
-
-        for (int i = Digits-1; i >= 0; i--)  Hex[i]=48;
-     }
-     return Hex;
-   }
 };
 #endif // PARSANDDROW_H
