@@ -315,7 +315,7 @@ class parsanddrow
                 t<<"\n";
                 t<<y[i];
             }
-            else
+            if(dev[i]=="con")
             {
                 t<<fromconnectmac1[i];
                 t<<"\n";

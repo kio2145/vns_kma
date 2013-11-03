@@ -21,6 +21,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    int dd;
+    int namber;
+    int m;
+    QString newname;
+    QString newmac;
     QPixmap pixmap;
     QPixmap pixmapp;
     QPixmap pixmappp;
@@ -43,7 +48,109 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->pushButton_4->setIconSize(QSize(60,60));
     ui->pushButton_6->setIcon(ButtonIconnnn);
     ui->pushButton_6->setIconSize(QSize(48,48));
+    parsanddrow d;
+    dd=(d.count(openfil()))/5;
+    d.cord(openfil(),dd);
+    drawinwindow();
+    namber=d.coutofdev("router",dd);
+    newname="Router" +QString::number(namber);
+    for(int j=0;j<dd;j++)// generate fuking router name
+    {
+        newname="Router" +QString::number(namber);
+        if(d.getname(j)==newname)
+        {
+            namber++;
+            j--;
+        }
+    }
+    for(int j=0;j<8;j++)
+    {
+        m = rand()%100;
+        newmac=newmac+QString::number( m, 16 );
 
+    }
+    for(int j=0;j<dd;j++)
+    {
+        if(d.getname(j)==newmac)
+        {
+             j=0;
+             for(int j=0;j<8;j++)
+             {
+                 m = rand()%100;
+                 newmac=newmac+QString::number( m, 16 );
+
+             }
+        }
+    }
+    ui->lineEdit_5->setText(newname);
+    ui->lineEdit_6->setText(newmac);
+namber=d.coutofdev("pc",dd);
+newname="pc"+QString::number(namber);     //generat pc name
+for(int j=0;j<dd;j++)
+{
+    newname="PC" +QString::number(namber);
+    if(d.getname(j)==newname)
+    {
+        namber++;
+        j--;
+    }
+}
+for(int j=0;j<8;j++)
+{
+    m = rand()%100;
+    newmac=newmac+QString::number( m, 16 );
+
+}
+for(int j=0;j<dd;j++)
+{
+    if(d.getname(j)==newmac)
+    {
+         j=0;
+         for(int j=0;j<8;j++)
+         {
+             m = rand()%100;
+             newmac=newmac+QString::number( m, 16 );
+
+         }
+    }
+}
+ui->lineEdit_2->setText(newmac);
+ui->lineEdit->setText(newname);
+drawinwindow();
+namber=d.coutofdev("Switch",dd);
+newname="Switch"+QString::number(namber);
+for(int j=0;j<dd;j++)
+{
+    newname="Switch" +QString::number(namber);
+    if(d.getname(j)==newname)
+    {
+        namber++;
+        j--;
+    }
+}
+for(int j=0;j<8;j++)
+{
+    m = rand()%100;
+    newmac=newmac+QString::number( m, 16 );
+
+}
+for(int j=0;j<dd;j++)
+{
+    if(d.getname(j)==newmac)
+    {
+         j=0;
+         for(int j=0;j<8;j++)
+         {
+             m = rand()%100;
+             newmac=newmac+QString::number( m, 16 );
+
+         }
+    }
+}
+ui->lineEdit_4->setText(newmac);
+ui->lineEdit_3->setText(newname);
+ui->label_9->setText(openfil());
+drawinwindow();
 }
 
 MainWindow::~MainWindow()
@@ -466,20 +573,31 @@ void MainWindow::drawinwindow()
                     int ypoch[dd];
                     int xend[dd];
                     int yend[dd];
+                    bool fir=false;
+                    bool sec=false;
                     for(int i=0; dd>i;i++)
                     {
                         if(d.gatmacconnect1(h)==d.getmac(i))
                         {
                             xpoch[h]=d.getx(i);
                             ypoch[h]=d.gety(i);
+                            fir=true;
                         }
                         else
                         if(d.gatmacconnect2(h)==d.getmac(i))
                         {
                             xend[h]=d.getx(i);
                             yend[h]=d.gety(i);
+                            sec=true;
                         }
+
                     }
+                    if(fir==false || sec==false)
+                        {
+                            d.delate(openfil(),dd,h);
+                        }
+
+                    if(fir!=false && sec!=false)
                     scene->addLine(QLineF(xpoch[h]+15, ypoch[h]+15, xend[h]+15, yend[h]+15), QPen(Qt::blue, 2));
                 }
                 if((l!="modem")|(l!="sw")|(l!="pc"))
@@ -659,12 +777,14 @@ void MainWindow::drawnewconnect(int xxend, int yyend)
                         {
                             xpoch[h]=d.getx(i);
                             ypoch[h]=d.gety(i);
+
                         }
                         else
                         if(d.gatmacconnect2(h)==d.getmac(i))
                         {
                             xend[h]=d.getx(i);
                             yend[h]=d.gety(i);
+
                         }
                     }
                     scene->addLine(QLineF(xpoch[h]+15, ypoch[h]+15, xend[h]+15, yend[h]+15), QPen(Qt::blue, 2));
