@@ -38,9 +38,14 @@ private slots:
 
     void drawnewconnect(int xxend, int yyend);
 
+    QString namgenerate(QString typedev);
+
+    QString macgenerate();
+
     QString openfil();
 
     void on_actionNew_triggered();
+
 
 private:
     Ui::MainWindow *ui;

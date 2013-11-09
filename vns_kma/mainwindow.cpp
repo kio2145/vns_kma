@@ -48,109 +48,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->pushButton_4->setIconSize(QSize(60,60));
     ui->pushButton_6->setIcon(ButtonIconnnn);
     ui->pushButton_6->setIconSize(QSize(48,48));
-    parsanddrow d;
-    dd=(d.count(openfil()))/5;
-    d.cord(openfil(),dd);
+    ui->lineEdit_5->setText(namgenerate("router"));
+    ui->lineEdit_6->setText(macgenerate());
+    ui->lineEdit_2->setText(macgenerate());
+    ui->lineEdit->setText(namgenerate("pc"));
+    ui->lineEdit_4->setText(macgenerate());
+    ui->lineEdit_3->setText(namgenerate("sw"));
+    ui->label_9->setText(openfil());
     drawinwindow();
-    namber=d.coutofdev("router",dd);
-    newname="Router" +QString::number(namber);
-    for(int j=0;j<dd;j++)// generate fuking router name
-    {
-        newname="Router" +QString::number(namber);
-        if(d.getname(j)==newname)
-        {
-            namber++;
-            j--;
-        }
-    }
-    for(int j=0;j<8;j++)
-    {
-        m = rand()%100;
-        newmac=newmac+QString::number( m, 16 );
-
-    }
-    for(int j=0;j<dd;j++)
-    {
-        if(d.getname(j)==newmac)
-        {
-             j=0;
-             for(int j=0;j<8;j++)
-             {
-                 m = rand()%100;
-                 newmac=newmac+QString::number( m, 16 );
-
-             }
-        }
-    }
-    ui->lineEdit_5->setText(newname);
-    ui->lineEdit_6->setText(newmac);
-namber=d.coutofdev("pc",dd);
-newname="pc"+QString::number(namber);     //generat pc name
-for(int j=0;j<dd;j++)
-{
-    newname="PC" +QString::number(namber);
-    if(d.getname(j)==newname)
-    {
-        namber++;
-        j--;
-    }
-}
-for(int j=0;j<8;j++)
-{
-    m = rand()%100;
-    newmac=newmac+QString::number( m, 16 );
-
-}
-for(int j=0;j<dd;j++)
-{
-    if(d.getname(j)==newmac)
-    {
-         j=0;
-         for(int j=0;j<8;j++)
-         {
-             m = rand()%100;
-             newmac=newmac+QString::number( m, 16 );
-
-         }
-    }
-}
-ui->lineEdit_2->setText(newmac);
-ui->lineEdit->setText(newname);
-drawinwindow();
-namber=d.coutofdev("Switch",dd);
-newname="Switch"+QString::number(namber);
-for(int j=0;j<dd;j++)
-{
-    newname="Switch" +QString::number(namber);
-    if(d.getname(j)==newname)
-    {
-        namber++;
-        j--;
-    }
-}
-for(int j=0;j<8;j++)
-{
-    m = rand()%100;
-    newmac=newmac+QString::number( m, 16 );
-
-}
-for(int j=0;j<dd;j++)
-{
-    if(d.getname(j)==newmac)
-    {
-         j=0;
-         for(int j=0;j<8;j++)
-         {
-             m = rand()%100;
-             newmac=newmac+QString::number( m, 16 );
-
-         }
-    }
-}
-ui->lineEdit_4->setText(newmac);
-ui->lineEdit_3->setText(newname);
-ui->label_9->setText(openfil());
-drawinwindow();
 }
 
 MainWindow::~MainWindow()
@@ -277,7 +182,7 @@ bool MainWindow::eventFilter(QObject *target, QEvent *event)// --------
                      {
                         d.stop("graphic.txt");
                         u.addconfig(openfil(),d.getmac(i));
-                        drawinwindow();
+                        //drawinwindow();
                      }
                      }
                      }
@@ -426,7 +331,7 @@ void MainWindow::on_pushButton_3_clicked() //тут свитчи
         }
     }
     ui->lineEdit_4->setText(newmac);
-    ui->lineEdit_3->setText(newname);
+    ui->lineEdit_3->setText(namgenerate("sw"));
     drawinwindow();
 }
 
@@ -796,4 +701,94 @@ void MainWindow::drawnewconnect(int xxend, int yyend)
     ui->graphicsView->show();
     ui->graphicsView->scene()->installEventFilter(this);
     d.deletemas();
+}
+QString MainWindow::namgenerate(QString typedev)
+{
+    parsanddrow d;
+    QString newname;
+    int namber;
+    int dd=0;
+    dd=(d.count(openfil()))/5;
+    d.cord(openfil(),dd);
+    if(typedev=="sw")
+    {
+        namber=d.coutofdev("Switch",dd);
+        newname="Switch"+QString::number(namber);
+        for(int j=0;j<dd;j++)
+        {
+            newname="Switch" +QString::number(namber);
+            if(d.getname(j)==newname)
+            {
+
+                namber++;
+                j--;
+            }
+        }
+    }
+    else
+    if(typedev=="pc")
+    {
+        namber=d.coutofdev("pc",dd);
+        newname="PC"+QString::number(namber);
+        for(int j=0;j<dd;j++)
+        {
+            newname="PC" +QString::number(namber);
+            if(d.getname(j)==newname)
+            {
+
+                namber++;
+                j--;
+            }
+        }
+    }
+    else
+    if(typedev=="router")
+    {
+        namber=d.coutofdev("modem",dd);
+        newname="Router"+QString::number(namber);
+        for(int j=0;j<dd;j++)
+        {
+            newname="Router" +QString::number(namber);
+            if(d.getname(j)==newname)
+            {
+
+                namber++;
+                j--;
+            }
+        }
+    }
+   d.deletemas();
+   return newname;
+}
+QString MainWindow::macgenerate()
+{
+
+    parsanddrow d;
+    int m=0;
+    QString newmac;
+    int dd=0;
+    dd=(d.count(openfil()))/5;
+    d.cord(openfil(),dd);
+    for(int j=0;j<8;j++)
+    {
+        m = rand()%100;
+        newmac=newmac+QString::number( m, 16 );
+
+    }
+    for(int j=0;j<dd;j++)
+    {
+        if(d.getname(j)==newmac)
+        {
+             j=0;
+             for(int j=0;j<8;j++)
+             {
+                 m = rand()%100;
+                 newmac=newmac+QString::number( m, 16 );
+
+             }
+        }
+    }
+    d.deletemas();
+   return newmac;
+
 }
