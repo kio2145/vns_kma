@@ -21,9 +21,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    int dd;
-    int namber;
-    int m;
     QString newname;
     QString newmac;
     QPixmap pixmap;
@@ -67,53 +64,13 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_clicked() //роутер тут!
 {
     router a;
-    parsanddrow d;
-    QString mac;
-    QString name;
     QString newname;
     QString newmac;
-    int m;
-    srand(time(NULL));
-    int dd;
-    name=ui->lineEdit_5->text();
-    mac=ui->lineEdit_6->text();
-    a.addconfig(openfil(),300,300,mac,name);
-    drawinwindow();
-    int namber;
-    dd=(d.count(openfil())/5);//кілкість рядків на 4 властивості отримаємо кілкість приладів
-    d.cord(openfil(),dd);//
-    namber=d.coutofdev("modem",dd);
-    newname="Router"+QString::number(namber);
-    for(int j=0;j<dd;j++)
-    {
-        newname="Router" +QString::number(namber);
-        if(d.getname(j)==newname)
-        {
-            namber++;
-            j--;
-        }
-    }
-    for(int j=0;j<8;j++)
-    {
-        m = rand()%100;
-        newmac=newmac+QString::number( m, 16 );
-
-    }
-    for(int j=0;j<dd;j++)
-    {
-        if(d.getname(j)==newmac)
-        {
-             j=0;
-             for(int j=0;j<8;j++)
-             {
-                 m = rand()%100;
-                 newmac=newmac+QString::number( m, 16 );
-
-             }
-        }
-    }
-    ui->lineEdit_5->setText(newname);
-    ui->lineEdit_6->setText(newmac);
+    newname=ui->lineEdit_5->text();
+    newmac=ui->lineEdit_6->text();
+    a.addconfig(openfil(),0,0,newmac,newname);
+    ui->lineEdit_5->setText(namgenerate("router"));
+    ui->lineEdit_6->setText(macgenerate());
     drawinwindow();
 }
 
@@ -132,8 +89,8 @@ bool MainWindow::eventFilter(QObject *target, QEvent *event)// --------
     int dd;
     if(d.count(openfil())!=0)
     {
-    dd=(d.count(openfil()))/5;
-    d.cord(openfil(),dd);
+    dd=d.count(openfil());
+    d.cord(openfil());
     qreal x;
     qreal y;
     QGraphicsScene *scene = new QGraphicsScene(ui->graphicsView);
@@ -201,7 +158,7 @@ bool MainWindow::eventFilter(QObject *target, QEvent *event)// --------
                  {
                      if(d.getdev(i)!="con")
                      {
-                       d.delate(openfil(),dd,i);
+                       d.delate(openfil(),i);
                        drawinwindow();
                      }
                  }
@@ -230,11 +187,12 @@ bool MainWindow::eventFilter(QObject *target, QEvent *event)// --------
                      if(xend>xpoch && x>xpoch && x<xend || xpoch>xend && x<xpoch &&x>xend)
                      if(abs(dotx-doty)==0 && abs(dotx-doty)>=0 )
                      {
-                         d.delate(openfil(),dd,i);
+                         d.delate(openfil(),i);
                          drawinwindow();
                      }
 
              }
+                 drawinwindow();
              }
          }
          }
@@ -269,121 +227,43 @@ bool MainWindow::eventFilter(QObject *target, QEvent *event)// --------
                  if(d.getx(i)>x-30 && d.getx(i)<x+30 && d.gety(i)>y-30 &&d.gety(i)<y+30 )
                   {
                      qd<<x<<"   "<<y<<" cath"<<"\n";
-                     int dd=(d.count(openfil()))/5;
-                     d.rewritedata(openfil(),dd,i,x,y);
+                     d.rewritedata(openfil(),i,x,y);
                      drawinwindow();
                  }
              }
-             }
+
          }
+     }
          return true;
     }
-       d.deletemas();
-       return false;
-    }
+      d.deletemas();
+      }
+     return false;
+
     }
       //Событие должно быть обработано родительским виджетом
 void MainWindow::on_pushButton_3_clicked() //тут свитчи
 {
     switches a;
-    parsanddrow d;
-    QString mac;
-    QString name;
     QString newname;
     QString newmac;
-    int m;
-    srand(time(NULL));
-    int dd;
-    mac=ui->lineEdit_4->text();
-    name=ui->lineEdit_3->text();
-    a.addconfig(openfil(),250,250,mac,name);
-    int namber;
-    dd=(d.count(openfil())/5);//кілкість рядків на 4 властивості отримаємо кілкість приладів
-    d.cord(openfil(),dd);//
-    namber=d.coutofdev("Switch",dd);
-    newname="Switch"+QString::number(namber);
-    for(int j=0;j<dd;j++)
-    {
-        newname="Switch" +QString::number(namber);
-        if(d.getname(j)==newname)
-        {
-            namber++;
-            j--;
-        }
-    }
-    for(int j=0;j<8;j++)
-    {
-        m = rand()%100;
-        newmac=newmac+QString::number( m, 16 );
-
-    }
-    for(int j=0;j<dd;j++)
-    {
-        if(d.getname(j)==newmac)
-        {
-             j=0;
-             for(int j=0;j<8;j++)
-             {
-                 m = rand()%100;
-                 newmac=newmac+QString::number( m, 16 );
-
-             }
-        }
-    }
-    ui->lineEdit_4->setText(newmac);
+    newname=ui->lineEdit_3->text();
+    newmac=ui->lineEdit_4->text();
+    a.addconfig(openfil(),0,0,newmac,newname);
+    ui->lineEdit_4->setText(macgenerate());
     ui->lineEdit_3->setText(namgenerate("sw"));
     drawinwindow();
 }
 
 void MainWindow::on_pushButton_4_clicked() //тут пк
-{
-    pc a;
-    parsanddrow d;
-    QString mac;
-    QString name;
+{   pc a;
     QString newname;
     QString newmac;
-    int m;
-    srand(time(NULL));
-    int dd=0;
-    name=ui->lineEdit->text();
-    mac=ui->lineEdit_2->text();
-    a.addconfig(openfil(),0,0,mac,name);
-    int namber;
-    dd=(d.count(openfil())/5);//кілкість рядків на 4 властивості отримаємо кілкість приладів
-    d.cord(openfil(),dd);//
-    namber=d.coutofdev("pc",dd);
-    newname="pc"+QString::number(namber);
-    for(int j=0;j<dd;j++)
-    {
-        newname="PC" +QString::number(namber);
-        if(d.getname(j)==newname)
-        {
-            namber++;
-            j--;
-        }
-    }
-    for(int j=0;j<8;j++)
-    {
-        m = rand()%100;
-        newmac=newmac+QString::number( m, 16 );
-
-    }
-    for(int j=0;j<dd;j++)
-    {
-        if(d.getname(j)==newmac)
-        {
-             j=0;
-             for(int j=0;j<8;j++)
-             {
-                 m = rand()%100;
-                 newmac=newmac+QString::number( m, 16 );
-
-             }
-        }
-    }
-    ui->lineEdit_2->setText(newmac);
-    ui->lineEdit->setText(newname);
+    newname=ui->lineEdit->text();
+    newmac=ui->lineEdit_2->text();
+    a.addconfig(openfil(),0,0,newmac,newname);
+    ui->lineEdit_2->setText(macgenerate());
+    ui->lineEdit->setText(namgenerate("pc"));
     drawinwindow();
 }
 
@@ -396,8 +276,8 @@ void MainWindow::on_pushButton_5_clicked()
 void MainWindow::on_pushButton_6_clicked()
 {
     parsanddrow d;
-    int dd=(d.count(openfil()))/5;
-    d.cord(openfil(),dd);
+    int dd=d.count(openfil());
+    d.cord(openfil());
     if(d.movstart("graphic.txt")==3)
     {
         d.stop("graphic.txt");
@@ -409,10 +289,13 @@ void MainWindow::on_pushButton_6_clicked()
 }
 void MainWindow::drawinwindow()
 {
+
+    parsanddrow d;
     QGraphicsScene *scene = new QGraphicsScene(ui->graphicsView);
     scene->setSceneRect(0,0,725,575);//розмір сцені
     ui->graphicsView->setAlignment(Qt::AlignLeft|Qt::AlignTop );
-    qApp->applicationDirPath() +"C:/Users/Igro/build-vns_kma-Desktop_Qt_5_1_1_MinGW_32bit-Debug/24.jpeg";
+    if(d.count(openfil())!=0)
+    {
     QPixmap pcc;
     QPixmap modem;
     QPixmap sw;
@@ -425,12 +308,10 @@ void MainWindow::drawinwindow()
     sw.load("sw.png");
     QString l; //назва приладу
     QDebug qd= qDebug();
-    parsanddrow d;
     int dd; //кілкість приладів
-    if(d.count(openfil())!=0)
-    {
-    dd=(d.count(openfil())/5);//кілкість рядків на 4 властивості отримаємо кілкість приладів
-    d.cord(openfil(),dd);//заповнення масивік кординатами та іменами (and mac)
+    dd=d.count(openfil());//кілкість рядків на 4 властивості отримаємо кілкість приладів
+    d.cord(openfil());//заповнення масивік кординатами та іменами (and mac)
+    if(dd)
     for(int h=0; h<dd; h++) //малювання
     {
         l=d.getdev(h);
@@ -499,7 +380,7 @@ void MainWindow::drawinwindow()
                     }
                     if(fir==false || sec==false)
                         {
-                            d.delate(openfil(),dd,h);
+                            d.delate(openfil(),h);
                         }
 
                     if(fir!=false && sec!=false)
@@ -511,11 +392,16 @@ void MainWindow::drawinwindow()
                 }
 
      }
+   // d.deletemas();
+    }
+    else
+    {
+        scene->clear();
+    }
+
     ui->graphicsView->setScene(scene);
     ui->graphicsView->show();
     ui->graphicsView->scene()->installEventFilter(this);
-    d.deletemas();
-    }
 }
 
 void MainWindow::on_actionExit_triggered()
@@ -567,11 +453,18 @@ QString MainWindow::openfil()
     }
     file.close();
     return mainfails;
+    drawinwindow();
 }
 
 void MainWindow::on_actionNew_triggered()
 {
     QString filew=QFileDialog::getSaveFileName();
+    if(filew.size()<=0)
+    {
+        QMessageBox::warning(0,"Warning", "УВАГА ВИ ПРАЦЮЕТЕ З ФАЙЛОМ "+openfil());
+    }
+    else
+    {
     QFile file("worckfile");
     QFile filen(filew.replace("\\\"","/"""));
     QTextStream streamm(&filen);
@@ -587,7 +480,8 @@ void MainWindow::on_actionNew_triggered()
         stream<<filew.replace("\\\"","/"""); //шаманизм с эскейп последовательностью с форума он пашет
     }
     file.close();
-
+    }
+    drawinwindow();
 }
 void MainWindow::drawnewconnect(int xxend, int yyend)
 {
@@ -618,8 +512,8 @@ void MainWindow::drawnewconnect(int xxend, int yyend)
     int dd; //кілкість приладів
     if(d.count(openfil())!=0)
     {
-    dd=(d.count(openfil())/5);//кілкість рядків на 4 властивості отримаємо кілкість приладів
-    d.cord(openfil(),dd);//заповнення масивік кординатами та іменами (and mac)
+    dd=d.count(openfil());//кілкість рядків на 4 властивості отримаємо кілкість приладів
+    d.cord(openfil());//заповнення масивік кординатами та іменами (and mac)
 
     for(int i=0;i<dd;i++)
     {
@@ -706,14 +600,16 @@ QString MainWindow::namgenerate(QString typedev)
 {
     parsanddrow d;
     QString newname;
-    int namber;
+    int namber=0;
     int dd=0;
-    dd=(d.count(openfil()))/5;
-    d.cord(openfil(),dd);
+    d.cord(openfil());
+    dd=d.count(openfil());
     if(typedev=="sw")
     {
-        namber=d.coutofdev("Switch",dd);
+
+        namber=d.coutofdev("Switch");
         newname="Switch"+QString::number(namber);
+        if(dd!=0)
         for(int j=0;j<dd;j++)
         {
             newname="Switch" +QString::number(namber);
@@ -728,8 +624,9 @@ QString MainWindow::namgenerate(QString typedev)
     else
     if(typedev=="pc")
     {
-        namber=d.coutofdev("pc",dd);
+        namber=d.coutofdev("pc");
         newname="PC"+QString::number(namber);
+        if(dd!=0)
         for(int j=0;j<dd;j++)
         {
             newname="PC" +QString::number(namber);
@@ -744,8 +641,10 @@ QString MainWindow::namgenerate(QString typedev)
     else
     if(typedev=="router")
     {
-        namber=d.coutofdev("modem",dd);
+        namber=d.coutofdev("modem");
         newname="Router"+QString::number(namber);
+        if(dd!=0)
+        {
         for(int j=0;j<dd;j++)
         {
             newname="Router" +QString::number(namber);
@@ -756,8 +655,10 @@ QString MainWindow::namgenerate(QString typedev)
                 j--;
             }
         }
+        }
     }
    d.deletemas();
+
    return newname;
 }
 QString MainWindow::macgenerate()
@@ -767,14 +668,16 @@ QString MainWindow::macgenerate()
     int m=0;
     QString newmac;
     int dd=0;
-    dd=(d.count(openfil()))/5;
-    d.cord(openfil(),dd);
+    dd=d.count(openfil());
     for(int j=0;j<8;j++)
     {
         m = rand()%100;
         newmac=newmac+QString::number( m, 16 );
 
     }
+    if(dd!=0)
+    {
+    d.cord(openfil());
     for(int j=0;j<dd;j++)
     {
         if(d.getname(j)==newmac)
@@ -788,7 +691,9 @@ QString MainWindow::macgenerate()
              }
         }
     }
+    if(dd!=0)
     d.deletemas();
+    }
    return newmac;
 
 }
