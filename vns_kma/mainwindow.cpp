@@ -16,6 +16,9 @@
 #include <stdlib.h>
 #include <time.h>
 #include "connects.h"
+#include<routersetting.h>
+#include<pcseting.h>
+#include<switchseting.h>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -200,6 +203,41 @@ bool MainWindow::eventFilter(QObject *target, QEvent *event)// --------
           {
 
               d.stop("graphic.txt");
+          }
+     }
+     if(event->type() == QEvent::MouseButtonDblClick)//опции тут !!!!!!!!!!!!!!
+     {
+          QMouseEvent *mouseEvent =(QMouseEvent*) event;
+          {
+              for(int i=0;i<dd;i++)
+              {
+                  x=mouseEvent->pos().x();
+                  y=mouseEvent->pos().y();
+                  if(d.getdev(i)!="con")
+                  {
+                  if(d.getx(i)>x-30 && d.getx(i)<x+30 && d.gety(i)>y-30 &&d.gety(i)<y+30 )
+                  {
+                      if(d.getdev(i)=="modem")
+                      {
+                          routersetting rout;
+                          rout.show();
+                          rout.exec();
+                      }
+                      if(d.getdev(i)=="pc")
+                      {
+                          PCseting pc;
+                          pc.show();
+                          pc.exec();
+                      }
+                      if(d.getdev(i)=="sw")
+                      {
+                          Switchseting sw;
+                          sw.show();
+                          sw.exec();
+                      }
+                  }
+              }
+          }
           }
      }
      if(event->type() == QEvent::MouseMove)

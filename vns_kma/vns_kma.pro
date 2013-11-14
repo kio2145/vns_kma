@@ -18,13 +18,22 @@ SOURCES += main.cpp\
     pc.cpp \
     switch.cpp \
     router.cpp \
-    connects.cpp
+    connects.cpp \
+    routersetting.cpp \
+    pcseting.cpp \
+    switchseting.cpp
 
 HEADERS  += mainwindow.h \
     parsanddrow.h \
     switch.h \
     pc.h \
     router.h \
-    connects.h
+    connects.h \
+    routersetting.h \
+    pcseting.h \
+    switchseting.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    routersetting.ui \
+    pcseting.ui \
+    switchseting.ui
