@@ -100,6 +100,41 @@ bool MainWindow::eventFilter(QObject *target, QEvent *event)// --------
     scene->setSceneRect(0,0,621,431);//розмір сцені
     ui->graphicsView->setAlignment(Qt::AlignLeft|Qt::AlignTop );
     QDebug qd= qDebug();
+    if(event->type() == QEvent::MouseButtonDblClick)//опции тут !!!!!!!!!!!!!!
+    {
+         QMouseEvent *mouseEvent =(QMouseEvent*) event;
+         {
+             for(int i=0;i<dd;i++)
+             {
+                 x=mouseEvent->pos().x();
+                 y=mouseEvent->pos().y();
+                 if(d.getdev(i)!="con")
+                 {
+                 if(d.getx(i)>x-30 && d.getx(i)<x+30 && d.gety(i)>y-30 &&d.gety(i)<y+30 )
+                 {
+                     if(d.getdev(i)=="modem")
+                     {
+                         routersetting rout;
+                         rout.show();
+                         rout.exec();
+                     }
+                     if(d.getdev(i)=="pc")
+                     {
+                         PCseting pc;
+                         pc.show();
+                         pc.exec();
+                     }
+                     if(d.getdev(i)=="sw")
+                     {
+                         Switchseting sw;
+                         sw.show();
+                         sw.exec();
+                     }
+                 }
+             }
+         }
+         }
+    }
      if(event->type() == QEvent::MouseButtonPress)
      {
          if(d.movstart("graphic.txt")==0)
@@ -205,41 +240,7 @@ bool MainWindow::eventFilter(QObject *target, QEvent *event)// --------
               d.stop("graphic.txt");
           }
      }
-     if(event->type() == QEvent::MouseButtonDblClick)//опции тут !!!!!!!!!!!!!!
-     {
-          QMouseEvent *mouseEvent =(QMouseEvent*) event;
-          {
-              for(int i=0;i<dd;i++)
-              {
-                  x=mouseEvent->pos().x();
-                  y=mouseEvent->pos().y();
-                  if(d.getdev(i)!="con")
-                  {
-                  if(d.getx(i)>x-30 && d.getx(i)<x+30 && d.gety(i)>y-30 &&d.gety(i)<y+30 )
-                  {
-                      if(d.getdev(i)=="modem")
-                      {
-                          routersetting rout;
-                          rout.show();
-                          rout.exec();
-                      }
-                      if(d.getdev(i)=="pc")
-                      {
-                          PCseting pc;
-                          pc.show();
-                          pc.exec();
-                      }
-                      if(d.getdev(i)=="sw")
-                      {
-                          Switchseting sw;
-                          sw.show();
-                          sw.exec();
-                      }
-                  }
-              }
-          }
-          }
-     }
+
      if(event->type() == QEvent::MouseMove)
     {
 
